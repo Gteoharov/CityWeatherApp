@@ -1,6 +1,6 @@
 import Foundation
 
-struct CitySearchItem: Equatable {
+public struct CitySearchItem: Equatable {
     public let name: String
     public let latitude: Double
     public let longitutde: Double
