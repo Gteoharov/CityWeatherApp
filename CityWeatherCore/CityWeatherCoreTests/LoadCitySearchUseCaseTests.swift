@@ -10,11 +10,20 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
     }
     
     func test_load_requestsDataFromURL() async {
-        let (sut, client) = makeSUT(request: makeURLRequest())
+        let (sut, client) = makeSUT(request: createURLRequest())
         
         let _ = await sut.load(query: createQuery())
         
-        XCTAssertEqual(client.sentRequest, [makeURLRequest()])
+        XCTAssertEqual(client.sentRequest, [createURLRequest()])
+    }
+    
+    func test_loadTwice_requestDataFromURL() async {
+        let (sut, client) = makeSUT(request: createURLRequest())
+        
+        let _ = await sut.load(query: createQuery())
+        let _ = await sut.load(query: createQuery())
+        
+        XCTAssertEqual(client.sentRequest, [createURLRequest(), createURLRequest()])
     }
     
     // MARK: - Helpers

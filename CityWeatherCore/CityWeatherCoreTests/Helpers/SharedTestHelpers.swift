@@ -8,7 +8,7 @@ func anyData() -> Data {
     Data("any data".utf8)
 }
 
-func makeURLRequest() -> URLRequest {
+func createURLRequest() -> URLRequest {
     URLRequest(url: anyURL())
 }
 
