@@ -43,6 +43,6 @@ public final class RemoteCitySearchLoader: CitySearchLoader {
 
 private extension Array where Element == RemoteCitySearchItem {
     func toModels() -> [CitySearchItem] {
-        map { CitySearchItem(name: $0.name, latitude: $0.lat, longitutde: $0.lon, country: $0.country, state: nil) }
+        map { CitySearchItem(name: $0.name, latitude: $0.lat, longitutde: $0.lon, country: $0.country, state: $0.state) }
     }
 }
