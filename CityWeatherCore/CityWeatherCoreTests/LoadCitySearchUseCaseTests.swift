@@ -65,6 +65,21 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() async {
+        let (sut, client) = makeSUT()
+        
+        client.stub(result: (statusCode: 200, data: anyData()), error: nil)
+        
+        let result = await sut.load(query: createQuery())
+        
+        switch result {
+        case let .failure(receivedError):
+            XCTAssertEqual(receivedError as! RemoteCitySearchLoader.Error, RemoteCitySearchLoader.Error.invalidData)
+        default:
+            XCTFail("Expect failure, but got \(result) instead")
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(request: URLRequest = .init(url: URL(string: "https://a-url.com")!),
