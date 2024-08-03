@@ -9,6 +9,14 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         XCTAssertEqual(client.sentRequest, [])
     }
     
+    func test_load_requestsDataFromURL() async {
+        let (sut, client) = makeSUT(request: makeURLRequest())
+        
+        let _ = await sut.load(query: createQuery())
+        
+        XCTAssertEqual(client.sentRequest, [makeURLRequest()])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(request: URLRequest = .init(url: URL(string: "https://a-url.com")!), 
