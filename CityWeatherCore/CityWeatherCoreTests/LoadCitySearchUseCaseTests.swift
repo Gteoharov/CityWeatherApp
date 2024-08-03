@@ -5,6 +5,18 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
     
     
     // MARK: - Helpers
+    
+    private func makeSUT(request: URLRequest = .init(url: URL(string: "https://a-url.com")!), 
+                         file: StaticString = #filePath,
+                         line: UInt = #line
+    ) -> (sut: RemoteCitySearchLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteCitySearchLoader(request: request, client: client)
+        trackForMemoryLeaks(client, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return (sut: sut, client: client)
+    }
+    
     private class HTTPClientSpy: HTTPClient {
         
         struct Stub {
