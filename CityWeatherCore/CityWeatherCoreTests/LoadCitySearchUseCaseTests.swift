@@ -26,7 +26,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         XCTAssertEqual(client.sentRequest, [createURLRequest(), createURLRequest()])
     }
     
-    // Sad paths
+    // MARK: - Sad paths
     
     func test_load_deliversErrorOnHTTPClientError() async {
         let (sut, client) = makeSUT()
@@ -68,7 +68,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() async {
         let (sut, client) = makeSUT()
         
-        client.stub(result: (statusCode: 200, data: anyData()), error: nil)
+        client.stub(result: (statusCode: create200StatusCode(), data: anyData()), error: nil)
         
         let result = await sut.load(query: createQuery())
         
@@ -80,9 +80,26 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         }
     }
     
+    // MARK: - Happy paths
+    
+    func test_load_deliversNoCitiesOn200HTTPResponseWithEmptyJSONList() async {
+        let (sut, client) = makeSUT()
+        
+        client.stub(result: (statusCode: create200StatusCode(), data: createEmptyListJSONData()), error: nil)
+        
+        let result = await sut.load(query: createQuery())
+        
+        switch result {
+        case let .success(receivedItems):
+            XCTAssertEqual(receivedItems, [])
+        default:
+            XCTFail("Expected success, got \(result) instead")
+        }
+    }
+    
     // MARK: - Helpers
     
-    private func makeSUT(request: URLRequest = .init(url: URL(string: "https://a-url.com")!),
+    private func makeSUT(request: URLRequest = .init(url: anyURL()),
                          file: StaticString = #filePath,
                          line: UInt = #line
     ) -> (sut: RemoteCitySearchLoader, client: HTTPClientSpy) {
