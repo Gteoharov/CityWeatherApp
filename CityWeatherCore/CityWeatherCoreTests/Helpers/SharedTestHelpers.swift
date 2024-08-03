@@ -1,5 +1,6 @@
 import Foundation
 
+
 func anyNSError() -> NSError {
     return NSError(domain: "any error", code: 0)
 }
@@ -12,8 +13,16 @@ func anyData() -> Data {
     Data("any data".utf8)
 }
 
+func createEmptyListJSONData() -> Data {
+    Data("{\"data\": []}".utf8)
+}
+
 func createURLRequest() -> URLRequest {
     URLRequest(url: anyURL())
+}
+
+func create200StatusCode() -> Int {
+    200
 }
 
 func createStatusCodesArray() -> [Int] {
