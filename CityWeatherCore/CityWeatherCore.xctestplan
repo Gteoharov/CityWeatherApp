@@ -13,9 +13,6 @@
   },
   "testTargets" : [
     {
-      "skippedTests" : [
-        "CityWeatherCoreTests"
-      ],
       "target" : {
         "containerPath" : "container:CityWeatherCore.xcodeproj",
         "identifier" : "2165DAA62C5E329500BA6B48",
