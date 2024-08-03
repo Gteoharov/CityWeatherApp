@@ -30,18 +30,19 @@ public final class RemoteCitySearchLoader: CitySearchLoader {
         switch result {
         case let .success((data, response)):
             do {
-                
+                let cities = try CitySearchItemsMapper.map(data, from: response)
+                return .success(cities.toModels())
             } catch {
                 return .failure(error)
             }
         case .failure:
             return .failure(Error.noConnection)
         }
-        
-        return CitySearchLoader.LoadCitySearchResult.success([])
     }
 }
 
-extension RemoteCitySearchItem {
-    
+private extension Array where Element == RemoteCitySearchItem {
+    func toModels() -> [CitySearchItem] {
+        map { CitySearchItem(name: $0.name, latitude: $0.lat, longitutde: $0.lon, country: $0.country, state: nil) }
+    }
 }
