@@ -26,6 +26,24 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         XCTAssertEqual(client.sentRequest, [createURLRequest(), createURLRequest()])
     }
     
+    // Sad paths
+    
+    func test_load_deliversErrorOnHTTPClientError() async {
+        let (sut, client) = makeSUT()
+        
+        client.stub(result: nil, error: anyNSError())
+        
+        let result = await sut.load(query: createQuery())
+        
+        switch result {
+        case let .failure(receivedError):
+            XCTAssertEqual(receivedError as! RemoteCitySearchLoader.Error, RemoteCitySearchLoader.Error.noConnection)
+            
+        default:
+            XCTFail("Expected failure, got \(result) instead")
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(request: URLRequest = .init(url: URL(string: "https://a-url.com")!), 
