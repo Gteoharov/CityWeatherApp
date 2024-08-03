@@ -97,6 +97,27 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversCitiesOn200HTTPResponseWithJSONItems() async {
+        let(sut, client) = makeSUT()
+        
+        let firstCity = makeCity(name: "Paris", latitude: 23.33, longitude: 12.22, country: "France")
+        let secondCity = makeCity(name: "Munich", latitude: 32.25, longitude: 1.23, country: "Bulgaria", state: "Bayern")
+        
+        let itemsJSONData = makeCitiesJSON([firstCity.json, secondCity.json])
+        
+        client.stub(result: (statusCode: create200StatusCode(), data: itemsJSONData), error: nil)
+        
+        let result = await sut.load(query: createQuery())
+        
+        switch result {
+        case let .success(receivedItems):
+            XCTAssertEqual(receivedItems, [firstCity.model, secondCity.model])
+            
+        default:
+            XCTFail("Expect success, got \(result) instead")
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(request: URLRequest = .init(url: anyURL()),
@@ -108,6 +129,32 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut: sut, client: client)
+    }
+    
+    private func makeCity(name: String, 
+                          latitude: Double,
+                          longitude: Double,
+                          country: String,
+                          state: String? = nil) ->
+    (model: CitySearchItem, json: [String: Any]) {
+        let city = CitySearchItem(name: name, latitude: latitude, longitude: longitude, country: country, state: state)
+        var jsonCity: [String: Any] = [
+            "name": name,
+            "lat": latitude,
+            "lon": longitude,
+            "country": country
+        ]
+        
+        if let state = state {
+            jsonCity["state"] = state
+        }
+        
+        return (city, jsonCity)
+    }
+    
+    private func makeCitiesJSON(_ cities: [[String: Any]]) -> Data {
+        let json = cities
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     private class HTTPClientSpy: HTTPClient {
