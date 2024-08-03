@@ -4,16 +4,19 @@ final class CitySearchItemsMapper {
     
     private init() {}
     
-    private struct RootCitySearchResponse: Decodable {
-        let data: [RemoteCitySearchItem]
-    }
-    
     private static var OK_200: Int { 200 }
     
     static func map(_ data: Data, from response: HTTPURLResponse) throws -> [RemoteCitySearchItem] {
-        guard response.statusCode == OK_200, let root = try? JSONDecoder().decode(RootCitySearchResponse.self, from: data) else {
+        guard response.statusCode == OK_200 else {
             throw RemoteCitySearchLoader.Error.invalidData
         }
-        return root.data
+        
+        do {
+            let cities = try JSONDecoder().decode([RemoteCitySearchItem].self, from: data)
+            return cities
+        } catch {
+            print("Decoding error: \(error)")
+            throw RemoteCitySearchLoader.Error.invalidData
+        }
     }
 }
