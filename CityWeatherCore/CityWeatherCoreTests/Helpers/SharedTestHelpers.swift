@@ -14,7 +14,7 @@ func anyData() -> Data {
 }
 
 func createEmptyListJSONData() -> Data {
-    Data("{\"data\": []}".utf8)
+    Data("[]".utf8)
 }
 
 func createURLRequest() -> URLRequest {
