@@ -7,7 +7,7 @@ public final class URLSessionClient: HTTPClient {
         self.session = session
     }
     
-    private enum ClientError: Error {
+    private enum Error: Swift.Error {
         case invalidURL
         case unexpectedResponse
     }
@@ -18,7 +18,7 @@ public final class URLSessionClient: HTTPClient {
             if let response = response as? HTTPURLResponse {
                 return .success((data, response))
             }
-            return .failure(ClientError.unexpectedResponse)
+            return .failure(Error.unexpectedResponse)
         } catch {
             return .failure(error)
         }
@@ -28,7 +28,7 @@ public final class URLSessionClient: HTTPClient {
 private extension URLSessionClient {
     private func buildRequest(from request: URLRequest, with queryItems: [URLQueryItem]?) throws -> URLRequest {
         guard var components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false) else {
-            throw ClientError.invalidURL
+            throw Error.invalidURL
         }
         
         if let existingItems = components.queryItems {
@@ -38,7 +38,7 @@ private extension URLSessionClient {
         }
         
         guard let url = components.url else {
-            throw ClientError.invalidURL
+            throw Error.invalidURL
         }
         
         var newRequest = request
