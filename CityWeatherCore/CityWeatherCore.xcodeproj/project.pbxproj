@@ -11,6 +11,7 @@
 		2165DA962C5E196B00BA6B48 /* CitySearchLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2165DA952C5E196B00BA6B48 /* CitySearchLoader.swift */; };
 		2165DA992C5E1A8F00BA6B48 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2165DA982C5E1A8F00BA6B48 /* HTTPClient.swift */; };
 		2165DA9B2C5E1B8400BA6B48 /* RemoteCitySearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2165DA9A2C5E1B8400BA6B48 /* RemoteCitySearchItem.swift */; };
+		2165DA9D2C5E1C6F00BA6B48 /* RemoteCitySearchLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2165DA9C2C5E1C6F00BA6B48 /* RemoteCitySearchLoader.swift */; };
 		21D68D622C5E0A2400ED8E8A /* CityWeatherCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 21D68D612C5E0A2400ED8E8A /* CityWeatherCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -19,6 +20,7 @@
 		2165DA952C5E196B00BA6B48 /* CitySearchLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchLoader.swift; sourceTree = "<group>"; };
 		2165DA982C5E1A8F00BA6B48 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		2165DA9A2C5E1B8400BA6B48 /* RemoteCitySearchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCitySearchItem.swift; sourceTree = "<group>"; };
+		2165DA9C2C5E1C6F00BA6B48 /* RemoteCitySearchLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCitySearchLoader.swift; sourceTree = "<group>"; };
 		21D68D5E2C5E0A2400ED8E8A /* CityWeatherCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CityWeatherCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D68D612C5E0A2400ED8E8A /* CityWeatherCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityWeatherCore.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,6 +50,7 @@
 			children = (
 				2165DA982C5E1A8F00BA6B48 /* HTTPClient.swift */,
 				2165DA9A2C5E1B8400BA6B48 /* RemoteCitySearchItem.swift */,
+				2165DA9C2C5E1C6F00BA6B48 /* RemoteCitySearchLoader.swift */,
 			);
 			path = CitySearchAPI;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				2165DA942C5E187100BA6B48 /* CitySearchItem.swift in Sources */,
 				2165DA962C5E196B00BA6B48 /* CitySearchLoader.swift in Sources */,
 				2165DA992C5E1A8F00BA6B48 /* HTTPClient.swift in Sources */,
+				2165DA9D2C5E1C6F00BA6B48 /* RemoteCitySearchLoader.swift in Sources */,
 				2165DA9B2C5E1B8400BA6B48 /* RemoteCitySearchItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
