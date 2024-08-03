@@ -1,0 +1,27 @@
+{
+  "configurations" : [
+    {
+      "id" : "EA1DF8B8-00BA-44DD-9C83-A1CDBC703E8A",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "CityWeatherCoreTests"
+      ],
+      "target" : {
+        "containerPath" : "container:CityWeatherCore.xcodeproj",
+        "identifier" : "2165DAA62C5E329500BA6B48",
+        "name" : "CityWeatherCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}
