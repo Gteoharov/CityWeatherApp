@@ -16,6 +16,14 @@ func createURLRequest() -> URLRequest {
     URLRequest(url: anyURL())
 }
 
+func createStatusCodesArray() -> [Int] {
+    [199, 201, 300, 400, 500]
+}
+
+func createQuery() -> String {
+    "Paris"
+}
+
 func nonHTTPURLResponse() -> URLResponse {
     URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
 }
@@ -28,6 +36,4 @@ func buildURL(with query: String, url: URL) -> URL {
     url.appending(queryItems: [URLQueryItem(name: "kv", value: query)])
 }
 
-func createQuery() -> String {
-    "Paris"
-}
+

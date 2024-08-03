@@ -44,9 +44,30 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversErrorOnNon200HTTPResponse() async {
+        let (sut, client) = makeSUT()
+        
+        let samples = createStatusCodesArray()
+        
+        samples.enumerated().forEach { index, code in
+            client.stub(result: (statusCode: code, data: anyData()), error: nil)
+            
+            Task { [sut] in
+                let result = await sut.load(query: createQuery())
+                
+                switch result {
+                case let .failure(receivedError):
+                    XCTAssertEqual(receivedError as! RemoteCitySearchLoader.Error, RemoteCitySearchLoader.Error.invalidData)
+                default:
+                    XCTFail("Expected failure, but got \(result) instead")
+                }
+            }
+        }
+    }
+    
     // MARK: - Helpers
     
-    private func makeSUT(request: URLRequest = .init(url: URL(string: "https://a-url.com")!), 
+    private func makeSUT(request: URLRequest = .init(url: URL(string: "https://a-url.com")!),
                          file: StaticString = #filePath,
                          line: UInt = #line
     ) -> (sut: RemoteCitySearchLoader, client: HTTPClientSpy) {
