@@ -9,7 +9,7 @@ public final class URLSessionClient: HTTPClient {
     
     public func perform(request: URLRequest, queryItems: [URLQueryItem]?) async -> HTTPClient.HTTPClientResult {
         do {
-            let (data, response) = try await session.data(for: buildRequest(from: request, with: queryItems))
+            let (data, response) = try await session.data(for: RequestBuilder.buildRequest(from: request, with: queryItems))
             if let response = response as? HTTPURLResponse {
                 return .success((data, response))
             }
