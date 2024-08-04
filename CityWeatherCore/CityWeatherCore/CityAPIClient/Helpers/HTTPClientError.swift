@@ -10,8 +10,8 @@ public enum HTTPClientError: Error, Equatable {
         case (.invalidURL, .invalidURL),
              (.unexpectedResponse, .unexpectedResponse):
             return true
-        case let (.networkError(code1, message1), .networkError(code2, message2)):
-            return code1 == code2 && message1 == message2
+        case let (.networkError(firstCodeError, firstMessageError), .networkError(secondCodeError, secondMessageError)):
+            return firstCodeError == secondCodeError && firstMessageError == secondMessageError
         default:
             return false
         }
