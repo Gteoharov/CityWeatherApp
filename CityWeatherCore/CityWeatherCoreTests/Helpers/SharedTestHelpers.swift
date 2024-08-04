@@ -21,6 +21,10 @@ func createURLRequest() -> URLRequest {
     URLRequest(url: anyURL())
 }
 
+func createURLQuerryItemArray(for query: String) -> [URLQueryItem] {
+    [URLQueryItem(name: "k", value: query)]
+}
+
 func create200StatusCode() -> Int {
     200
 }
@@ -42,7 +46,7 @@ func anyHTTPURLResponse() -> HTTPURLResponse {
 }
 
 func buildURL(with query: String, url: URL) -> URL {
-    url.appending(queryItems: [URLQueryItem(name: "kv", value: query)])
+    url.appending(queryItems: [URLQueryItem(name: "q", value: query)])
 }
 
 

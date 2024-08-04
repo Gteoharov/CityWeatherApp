@@ -101,7 +101,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         let(sut, client) = makeSUT()
         
         let firstCity = makeCity(name: "Paris", latitude: 23.33, longitude: 12.22, country: "France")
-        let secondCity = makeCity(name: "Munich", latitude: 32.25, longitude: 1.23, country: "Bulgaria", state: "Bayern")
+        let secondCity = makeCity(name: "Munich", latitude: 32.25, longitude: 1.23, country: "Germany", state: "Bayern")
         
         let itemsJSONData = makeCitiesJSON([firstCity.json, secondCity.json])
         
