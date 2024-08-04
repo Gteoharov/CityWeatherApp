@@ -100,8 +100,8 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
     func test_load_deliversCitiesOn200HTTPResponseWithJSONItems() async {
         let(sut, client) = makeSUT()
         
-        let firstCity = makeCity(name: "Paris", latitude: 23.33, longitude: 12.22, country: "France")
-        let secondCity = makeCity(name: "Munich", latitude: 32.25, longitude: 1.23, country: "Germany", state: "Bayern")
+        let firstCity = makeCity(name: "Paris", localNames: [:], latitude: 23.33, longitude: 12.22, country: "France")
+        let secondCity = makeCity(name: "Munich", localNames: [:], latitude: 32.25, longitude: 1.23, country: "Germany", state: "Bayern")
         
         let itemsJSONData = makeCitiesJSON([firstCity.json, secondCity.json])
         
@@ -131,15 +131,17 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         return (sut: sut, client: client)
     }
     
-    private func makeCity(name: String, 
+    private func makeCity(name: String,
+                          localNames: [String: String],
                           latitude: Double,
                           longitude: Double,
                           country: String,
                           state: String? = nil) ->
     (model: CitySearchItem, json: [String: Any]) {
-        let city = CitySearchItem(name: name, latitude: latitude, longitude: longitude, country: country, state: state)
+        let city = CitySearchItem(name: name, localNames: localNames, latitude: latitude, longitude: longitude, country: country, state: state)
         var jsonCity: [String: Any] = [
             "name": name,
+            "local_names": localNames,
             "lat": latitude,
             "lon": longitude,
             "country": country

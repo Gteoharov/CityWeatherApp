@@ -1,6 +1,6 @@
 import Foundation
 
-public enum HTTPClientError: Swift.Error, Equatable {
+public enum HTTPClientError: Error, Equatable {
     case invalidURL
     case unexpectedResponse
     case networkError(Int, String)
