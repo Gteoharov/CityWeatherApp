@@ -12,7 +12,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
     func test_load_requestsDataFromURL() async {
         let (sut, client) = makeSUT(request: createURLRequest())
         
-        let _ = await sut.load(query: createQuery())
+        let _ = await sut.load(withQuery: createQuery())
         
         XCTAssertEqual(client.sentRequest, [createURLRequest()])
     }
@@ -20,8 +20,8 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
     func test_loadTwice_requestDataFromURL() async {
         let (sut, client) = makeSUT(request: createURLRequest())
         
-        let _ = await sut.load(query: createQuery())
-        let _ = await sut.load(query: createQuery())
+        let _ = await sut.load(withQuery: createQuery())
+        let _ = await sut.load(withQuery: createQuery())
         
         XCTAssertEqual(client.sentRequest, [createURLRequest(), createURLRequest()])
     }
@@ -33,7 +33,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         
         client.stub(result: nil, error: anyNSError())
         
-        let result = await sut.load(query: createQuery())
+        let result = await sut.load(withQuery: createQuery())
         
         switch result {
         case let .failure(receivedError):
@@ -53,7 +53,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
             client.stub(result: (statusCode: code, data: anyData()), error: nil)
             
             Task { [sut] in
-                let result = await sut.load(query: createQuery())
+                let result = await sut.load(withQuery: createQuery())
                 
                 switch result {
                 case let .failure(receivedError):
@@ -70,7 +70,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         
         client.stub(result: (statusCode: create200StatusCode(), data: anyData()), error: nil)
         
-        let result = await sut.load(query: createQuery())
+        let result = await sut.load(withQuery: createQuery())
         
         switch result {
         case let .failure(receivedError):
@@ -87,7 +87,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         
         client.stub(result: (statusCode: create200StatusCode(), data: createEmptyListJSONData()), error: nil)
         
-        let result = await sut.load(query: createQuery())
+        let result = await sut.load(withQuery: createQuery())
         
         switch result {
         case let .success(receivedItems):
@@ -107,7 +107,7 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
         
         client.stub(result: (statusCode: create200StatusCode(), data: itemsJSONData), error: nil)
         
-        let result = await sut.load(query: createQuery())
+        let result = await sut.load(withQuery: createQuery())
         
         switch result {
         case let .success(receivedItems):

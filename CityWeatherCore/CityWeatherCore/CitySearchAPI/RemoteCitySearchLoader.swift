@@ -24,8 +24,9 @@ public final class RemoteCitySearchLoader: CitySearchLoader {
     }
     
     
-    public func load(query: String) async -> CitySearchLoader.LoadCitySearchResult {
-        let result = await client.perform(request: request, queryItems: buildSearchQuery(for: query))
+    public func load(withQuery: String) async -> CitySearchLoader.LoadCitySearchResult {
+        print(request.url)
+        let result = await client.perform(request: request, queryItems: buildSearchQuery(for: withQuery))
         
         switch result {
         case let .success((data, response)):
