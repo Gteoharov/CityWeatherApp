@@ -40,6 +40,50 @@ final class SearchCityViewController: UIViewController {
         setupNoResultsLabel()
     }
     
+    private func bindViewModel() {
+        viewModel.$cityItems
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+                if self.viewModel.cityItems.isEmpty && self.searchController.searchBar.text!.count > 3 {
+                    self.noResultsLabel.showWithOpacityEffect()
+                } else {
+                    self.noResultsLabel.hideWithOpacityEffect()
+                }
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                guard let self = self else { return }
+                isLoading ? self.indicatorView.startAnimating() : self.indicatorView.stopAnimating()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard self != nil else { return }
+                if let error = error {
+                    // Handle error
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
+            .store(in: &subscriptions)
+    }
+}
+
+// MARK: - Helper methods
+private extension SearchCityViewController {
+    private func setUpUI() {
+        view.backgroundColor = .systemBackground
+        navigationItem.title = "Weather"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
     private func setupIndicatorView() {
         indicatorParentView.translatesAutoresizingMaskIntoConstraints = false
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,9 +107,9 @@ final class SearchCityViewController: UIViewController {
     private func setupNoResultsLabel() {
         noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
         noResultsLabel.text = "No Cities Match Your Search"
+        noResultsLabel.isHidden = true
         noResultsLabel.textAlignment = .center
         noResultsLabel.textColor = .gray
-        noResultsLabel.hideWithOpacityEffect()
         
         view.addSubview(noResultsLabel)
         
@@ -75,46 +119,6 @@ final class SearchCityViewController: UIViewController {
             noResultsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             noResultsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-    }
-    
-    private func bindViewModel() {
-        viewModel.$cityItems
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.tableView.reloadData()
-                self.noResultsLabel.isHidden = !self.viewModel.cityItems.isEmpty
-            }
-            .store(in: &subscriptions)
-        
-        viewModel.$isLoading
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isLoading in
-                guard let self = self else { return }
-                self.noResultsLabel.hideWithOpacityEffect()
-                isLoading ? self.indicatorView.startAnimating() : self.indicatorView.stopAnimating()
-            }
-            .store(in: &subscriptions)
-        
-        viewModel.$error
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                guard self != nil else { return }
-                if let error = error {
-                    // Handle error
-                    print("Error: \(error.localizedDescription)")
-                }
-            }
-            .store(in: &subscriptions)
-    }
-}
-
-// MARK: - Helper methods
-private extension SearchCityViewController {
-    private func setUpUI() {
-        view.backgroundColor = .systemBackground
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setupSearchController() {
@@ -144,9 +148,9 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.heightAnchor.constraint(equalTo: view.heightAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
@@ -156,6 +160,7 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCityTableViewCell", for: indexPath) as! SearchCityTableViewCell
+        cell.selectionStyle = .none
         cell.cityLabel.text = viewModel.displayName(indexPath.row)
         return cell
     }
@@ -172,7 +177,7 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
         cell.transform = CGAffineTransform(translationX: 0, y: -cell.frame.height)
         cell.alpha = 0
         
-        UIView.animate(withDuration: 0.75, delay: 0.05 * Double(indexPath.row), options: [.curveEaseInOut], animations: {
+        UIView.animate(withDuration: 0.85, delay: 0.05 * Double(indexPath.row), options: [.curveEaseInOut], animations: {
             cell.transform = .identity
             cell.alpha = 1
         }, completion: nil)
@@ -190,7 +195,6 @@ extension SearchCityViewController: UISearchResultsUpdating {
 extension SearchCityViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.clearItems()
-        self.noResultsLabel.showWithOpacityEffect()
     }
 }
 
@@ -199,14 +203,12 @@ extension SearchCityViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.isEmpty && range.length > 0 {
             viewModel.clearItems()
-            self.noResultsLabel.showWithOpacityEffect()
         }
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         viewModel.clearItems()
-        self.noResultsLabel.showWithOpacityEffect()
         return true
     }
 }
