@@ -63,7 +63,7 @@ final class SearchCityViewController: UIViewController {
     
     private func setupNoResultsLabel() {
         noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
-        noResultsLabel.text = "No food items found"
+        noResultsLabel.text = "No city items found"
         noResultsLabel.textAlignment = .center
         noResultsLabel.textColor = .gray
         noResultsLabel.isHidden = true
