@@ -13,7 +13,23 @@
 		2165DA862C5E0AED00BA6B48 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 2165DA852C5E0AED00BA6B48 /* Base */; };
 		2165DA882C5E0AEF00BA6B48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2165DA872C5E0AEF00BA6B48 /* Assets.xcassets */; };
 		2165DA8B2C5E0AEF00BA6B48 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 2165DA8A2C5E0AEF00BA6B48 /* Base */; };
+		21B08E762C60C344000A1055 /* CityWeatherCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B08E752C60C344000A1055 /* CityWeatherCore.framework */; };
+		21B08E772C60C344000A1055 /* CityWeatherCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21B08E752C60C344000A1055 /* CityWeatherCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		21B08E782C60C344000A1055 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				21B08E772C60C344000A1055 /* CityWeatherCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2165DA7B2C5E0AED00BA6B48 /* CityWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CityWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,6 +40,7 @@
 		2165DA872C5E0AEF00BA6B48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2165DA8A2C5E0AEF00BA6B48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2165DA8C2C5E0AEF00BA6B48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21B08E752C60C344000A1055 /* CityWeatherCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CityWeatherCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21B08E762C60C344000A1055 /* CityWeatherCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +60,7 @@
 			children = (
 				2165DA7D2C5E0AED00BA6B48 /* CityWeatherApp */,
 				2165DA7C2C5E0AED00BA6B48 /* Products */,
+				21B08E742C60C344000A1055 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +86,14 @@
 			path = CityWeatherApp;
 			sourceTree = "<group>";
 		};
+		21B08E742C60C344000A1055 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				21B08E752C60C344000A1055 /* CityWeatherCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,6 +104,7 @@
 				2165DA772C5E0AED00BA6B48 /* Sources */,
 				2165DA782C5E0AED00BA6B48 /* Frameworks */,
 				2165DA792C5E0AED00BA6B48 /* Resources */,
+				21B08E782C60C344000A1055 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

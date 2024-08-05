@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:CityWeatherCore/CityWeatherCore.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CityWeatherApp/CityWeatherApp.xcodeproj">
+   </FileRef>
+</Workspace>
