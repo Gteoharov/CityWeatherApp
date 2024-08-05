@@ -24,6 +24,7 @@
 		21B08E812C60C446000A1055 /* CityWeatheriOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 21B08E802C60C446000A1055 /* CityWeatheriOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		21B08E8C2C60C5A4000A1055 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B08E8B2C60C5A4000A1055 /* Coordinator.swift */; };
 		21B08E8E2C60C648000A1055 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B08E8D2C60C648000A1055 /* MainCoordinator.swift */; };
+		21B08E902C60D4B2000A1055 /* SearchCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B08E8F2C60D4B2000A1055 /* SearchCityViewController.swift */; };
 		21D68D622C5E0A2400ED8E8A /* CityWeatherCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 21D68D612C5E0A2400ED8E8A /* CityWeatherCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		21B08E802C60C446000A1055 /* CityWeatheriOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityWeatheriOS.h; sourceTree = "<group>"; };
 		21B08E8B2C60C5A4000A1055 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		21B08E8D2C60C648000A1055 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		21B08E8F2C60D4B2000A1055 /* SearchCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCityViewController.swift; sourceTree = "<group>"; };
 		21D68D5E2C5E0A2400ED8E8A /* CityWeatherCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CityWeatherCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D68D612C5E0A2400ED8E8A /* CityWeatherCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityWeatherCore.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +186,7 @@
 		21B08E882C60C48C000A1055 /* SearchCityScreen */ = {
 			isa = PBXGroup;
 			children = (
+				21B08E8F2C60D4B2000A1055 /* SearchCityViewController.swift */,
 			);
 			path = SearchCityScreen;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21B08E902C60D4B2000A1055 /* SearchCityViewController.swift in Sources */,
 				21B08E8C2C60C5A4000A1055 /* Coordinator.swift in Sources */,
 				21B08E8E2C60C648000A1055 /* MainCoordinator.swift in Sources */,
 			);

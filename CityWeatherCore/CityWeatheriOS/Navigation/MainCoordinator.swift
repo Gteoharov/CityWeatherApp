@@ -10,6 +10,9 @@ public class MainCoordinator: Coordinator {
     }
     
     public func configureRootScreen() {
+        let searchCityVC = SearchCityViewController()
+        searchCityVC.coordinator = self
         
+        navigationController.pushViewController(searchCityVC, animated: false)
     }
 }
