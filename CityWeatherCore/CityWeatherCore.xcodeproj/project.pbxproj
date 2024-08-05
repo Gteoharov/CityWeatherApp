@@ -22,6 +22,8 @@
 		2183E9D42C5F7CB5000AEB81 /* HTTPClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2183E9D32C5F7CB5000AEB81 /* HTTPClientError.swift */; };
 		2183E9D72C5F9B75000AEB81 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2183E9D62C5F9B75000AEB81 /* RequestBuilder.swift */; };
 		21B08E812C60C446000A1055 /* CityWeatheriOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 21B08E802C60C446000A1055 /* CityWeatheriOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		21B08E8C2C60C5A4000A1055 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B08E8B2C60C5A4000A1055 /* Coordinator.swift */; };
+		21B08E8E2C60C648000A1055 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B08E8D2C60C648000A1055 /* MainCoordinator.swift */; };
 		21D68D622C5E0A2400ED8E8A /* CityWeatherCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 21D68D612C5E0A2400ED8E8A /* CityWeatherCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		2183E9D62C5F9B75000AEB81 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		21B08E7E2C60C446000A1055 /* CityWeatheriOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CityWeatheriOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B08E802C60C446000A1055 /* CityWeatheriOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityWeatheriOS.h; sourceTree = "<group>"; };
+		21B08E8B2C60C5A4000A1055 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		21B08E8D2C60C648000A1055 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		21D68D5E2C5E0A2400ED8E8A /* CityWeatherCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CityWeatherCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D68D612C5E0A2400ED8E8A /* CityWeatherCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityWeatherCore.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +159,8 @@
 		21B08E852C60C468000A1055 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				21B08E8B2C60C5A4000A1055 /* Coordinator.swift */,
+				21B08E8D2C60C648000A1055 /* MainCoordinator.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -319,6 +325,7 @@
 					};
 					21B08E7D2C60C446000A1055 = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1540;
 					};
 					21D68D5D2C5E0A2400ED8E8A = {
 						CreatedOnToolsVersion = 15.4;
@@ -386,6 +393,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21B08E8C2C60C5A4000A1055 /* Coordinator.swift in Sources */,
+				21B08E8E2C60C648000A1055 /* MainCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +459,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -476,6 +486,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -485,6 +496,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

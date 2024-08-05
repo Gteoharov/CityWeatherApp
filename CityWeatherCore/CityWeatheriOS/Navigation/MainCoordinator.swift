@@ -1,8 +1,15 @@
-//
-//  MainCoordinator.swift
-//  CityWeatheriOS
-//
-//  Created by Georgi Teoharov on 5.08.24.
-//
+import UIKit
+import SwiftUI
+import CityWeatherCore
 
-import Foundation
+public class MainCoordinator: Coordinator {
+    public var navigationController: UINavigationController
+    
+    public init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+    
+    public func configureRootScreen() {
+        
+    }
+}
