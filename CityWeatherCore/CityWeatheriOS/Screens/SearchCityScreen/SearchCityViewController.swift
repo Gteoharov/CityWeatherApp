@@ -11,7 +11,6 @@ final class SearchCityViewController: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     private let tableView = UITableView()
-    private var tableViewHeightConstraint = NSLayoutConstraint()
     private let indicatorParentView = UIView()
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     private let noResultsLabel = UILabel()
@@ -63,18 +62,18 @@ final class SearchCityViewController: UIViewController {
     
     private func setupNoResultsLabel() {
         noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
-        noResultsLabel.text = "No city items found"
+        noResultsLabel.text = "No Cities Match Your Search"
         noResultsLabel.textAlignment = .center
         noResultsLabel.textColor = .gray
-        noResultsLabel.isHidden = true
+        noResultsLabel.hideWithOpacityEffect()
         
         view.addSubview(noResultsLabel)
         
         NSLayoutConstraint.activate([
             noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noResultsLabel.topAnchor.constraint(equalTo: indicatorParentView.bottomAnchor, constant: 20),
-            noResultsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            noResultsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            noResultsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            noResultsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
@@ -84,7 +83,6 @@ final class SearchCityViewController: UIViewController {
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.tableView.reloadData()
-                self.animateTableViewAppearance()
                 self.noResultsLabel.isHidden = !self.viewModel.cityItems.isEmpty
             }
             .store(in: &subscriptions)
@@ -92,8 +90,9 @@ final class SearchCityViewController: UIViewController {
         viewModel.$isLoading
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoading in
-                self?.noResultsLabel.isHidden = true
-                isLoading ? self?.indicatorView.startAnimating() : self?.indicatorView.stopAnimating()
+                guard let self = self else { return }
+                self.noResultsLabel.hideWithOpacityEffect()
+                isLoading ? self.indicatorView.startAnimating() : self.indicatorView.stopAnimating()
             }
             .store(in: &subscriptions)
         
@@ -122,7 +121,7 @@ private extension SearchCityViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Food"
+        searchController.searchBar.placeholder = "Search City"
         searchController.searchBar.searchTextField.autocorrectionType = .no
         searchController.searchBar.delegate = self
         searchController.searchBar.searchTextField.delegate = self
@@ -138,26 +137,17 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.alwaysBounceVertical = false
         
         view.addSubview(tableView)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableViewHeightConstraint
+            tableView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
-    }
-    
-    private func animateTableViewAppearance() {
-        let targetHeight: CGFloat = view.frame.height * 0.5
-        tableViewHeightConstraint.constant = targetHeight
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -200,13 +190,7 @@ extension SearchCityViewController: UISearchResultsUpdating {
 extension SearchCityViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.clearItems()
-        
-        tableViewHeightConstraint.constant = 0
-        self.noResultsLabel.isHidden = true
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            guard let self = self else { return }
-            self.view.layoutIfNeeded()
-        })
+        self.noResultsLabel.showWithOpacityEffect()
     }
 }
 
@@ -215,26 +199,14 @@ extension SearchCityViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.isEmpty && range.length > 0 {
             viewModel.clearItems()
-            
-            tableViewHeightConstraint.constant = 0
-            self.noResultsLabel.isHidden = true
-            UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                guard let self = self else { return }
-                self.view.layoutIfNeeded()
-            })
+            self.noResultsLabel.showWithOpacityEffect()
         }
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         viewModel.clearItems()
-        
-        tableViewHeightConstraint.constant = 0
-        self.noResultsLabel.isHidden = true
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            guard let self = self else { return }
-            self.view.layoutIfNeeded()
-        })
+        self.noResultsLabel.showWithOpacityEffect()
         return true
     }
 }

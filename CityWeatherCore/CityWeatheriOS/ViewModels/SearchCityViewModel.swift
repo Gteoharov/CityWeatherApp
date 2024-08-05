@@ -39,18 +39,18 @@ class SearchCityViewModel {
         
         Task {
             let result = await loader.load(withQuery: query)
-            DispatchQueue.main.async {
-                self.isLoading = false
-                switch result {
-                case .success(let items):
-                    self.cityItems = items
-                    self.error = nil
-                case .failure(let error):
-                    self.cityItems = []
-                    self.error = error
-                }
+            
+            self.isLoading = false
+            switch result {
+            case .success(let items):
+                self.cityItems = items
+                self.error = nil
+            case .failure(let error):
+                self.cityItems = []
+                self.error = error
             }
         }
+        
     }
     
     func clearItems() {

@@ -10,6 +10,7 @@
 		213556B42C60DEC000008A0B /* CityWeatherCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D68D5E2C5E0A2400ED8E8A /* CityWeatherCore.framework */; platformFilter = ios; };
 		213556B52C60DEC000008A0B /* CityWeatherCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21D68D5E2C5E0A2400ED8E8A /* CityWeatherCore.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		213556BA2C61046300008A0B /* SearchCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213556B92C61046300008A0B /* SearchCityTableViewCell.swift */; };
+		213556BC2C6148BB00008A0B /* Extension+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213556BB2C6148BB00008A0B /* Extension+UILabel.swift */; };
 		2165DA942C5E187100BA6B48 /* CitySearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2165DA932C5E187100BA6B48 /* CitySearchItem.swift */; };
 		2165DA962C5E196B00BA6B48 /* CitySearchLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2165DA952C5E196B00BA6B48 /* CitySearchLoader.swift */; };
 		2165DA992C5E1A8F00BA6B48 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2165DA982C5E1A8F00BA6B48 /* HTTPClient.swift */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		213556B92C61046300008A0B /* SearchCityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCityTableViewCell.swift; sourceTree = "<group>"; };
+		213556BB2C6148BB00008A0B /* Extension+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UILabel.swift"; sourceTree = "<group>"; };
 		2165DA932C5E187100BA6B48 /* CitySearchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchItem.swift; sourceTree = "<group>"; };
 		2165DA952C5E196B00BA6B48 /* CitySearchLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchLoader.swift; sourceTree = "<group>"; };
 		2165DA982C5E1A8F00BA6B48 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 		21B08E862C60C46F000A1055 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				213556BB2C6148BB00008A0B /* Extension+UILabel.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				213556BC2C6148BB00008A0B /* Extension+UILabel.swift in Sources */,
 				21B08E902C60D4B2000A1055 /* SearchCityViewController.swift in Sources */,
 				213556BA2C61046300008A0B /* SearchCityTableViewCell.swift in Sources */,
 				21B08E8C2C60C5A4000A1055 /* Coordinator.swift in Sources */,

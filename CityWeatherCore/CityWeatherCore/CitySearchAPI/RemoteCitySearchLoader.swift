@@ -23,11 +23,8 @@ public final class RemoteCitySearchLoader: CitySearchLoader {
         [URLQueryItem(name: QueryParameter.city, value: query)]
     }
     
-    
     public func load(withQuery: String) async -> CitySearchLoader.LoadCitySearchResult {
-        print(request.url)
         let result = await client.perform(request: request, queryItems: buildSearchQuery(for: withQuery))
-        
         switch result {
         case let .success((data, response)):
             do {
@@ -44,6 +41,6 @@ public final class RemoteCitySearchLoader: CitySearchLoader {
 
 private extension Array where Element == RemoteCitySearchItem {
     func toModels() -> [CitySearchItem] {
-        map { CitySearchItem(name: $0.name, localNames: $0.local_names, latitude: $0.lat, longitude: $0.lon, country: $0.country, state: $0.state) }
+        map { CitySearchItem(name: $0.name, latitude: $0.lat, longitude: $0.lon, country: $0.country, state: $0.state) }
     }
 }
