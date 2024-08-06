@@ -9,6 +9,8 @@ class SearchCityViewModel {
     @Published private(set) var isLoading: Bool = false
     @Published private(set) var error: Error?
     @Published private(set) var currentQuery = ""
+    @Published private(set) var lastSuccessfulQuery = ""
+    @Published private(set) var shouldTriggerSearch = false
     
     private let searchSubject = PassthroughSubject<String, Never>()
     
@@ -19,7 +21,12 @@ class SearchCityViewModel {
     
     func searchCity(query: String) {
         currentQuery = query
-        searchSubject.send(query)
+        if query != lastSuccessfulQuery {
+            shouldTriggerSearch = true
+            searchSubject.send(query)
+        } else {
+            shouldTriggerSearch = false
+        }
     }
     
     private func setupBindings() {
@@ -36,6 +43,8 @@ class SearchCityViewModel {
     }
     
     private func fetchCityItems(query: String) {
+        guard query != lastSuccessfulQuery else { return }
+        
         isLoading = true
         
         Task {
@@ -45,17 +54,21 @@ class SearchCityViewModel {
             switch result {
             case .success(let items):
                 self.cityItems = items
+                self.lastSuccessfulQuery = query
                 self.error = nil
             case .failure(let error):
                 self.cityItems = []
                 self.error = error
             }
+            self.shouldTriggerSearch = false
         }
-        
     }
     
     func clearItems() {
         cityItems = []
+        lastSuccessfulQuery = ""
+        currentQuery = ""
+        shouldTriggerSearch = false
     }
     
     func displayName(_ index: Int) -> String {
@@ -64,5 +77,9 @@ class SearchCityViewModel {
     
     func rowsCount() -> Int {
         cityItems.count
+    }
+    
+    func getCity(at index: Int) -> CitySearchItem {
+        return cityItems[index]
     }
 }

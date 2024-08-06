@@ -36,10 +36,12 @@ final class SearchCityViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        Publishers.CombineLatest3(viewModel.$cityItems, viewModel.$isLoading, viewModel.$currentQuery)
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (items, isLoading, query) in
-                    guard let self = self else { return }
+        Publishers.CombineLatest4(viewModel.$cityItems, viewModel.$isLoading, viewModel.$currentQuery, viewModel.$shouldTriggerSearch)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (items, isLoading, query, shouldTriggerSearch) in
+                guard let self = self else { return }
+                
+                if shouldTriggerSearch {
                     self.tableView.reloadData()
                     
                     let shouldShowNoResults = !isLoading && items.isEmpty && query.count > 2
@@ -53,7 +55,9 @@ final class SearchCityViewController: UIViewController {
                         self.noResultsLabel.isHidden = !shouldShowNoResults
                     }
                 }
-                .store(in: &subscriptions)
+            }
+            .store(in: &subscriptions)
+        
         viewModel.$error
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
