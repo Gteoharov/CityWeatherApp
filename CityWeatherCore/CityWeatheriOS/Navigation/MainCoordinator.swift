@@ -36,8 +36,8 @@ public class MainCoordinator: Coordinator {
         navigationController.pushViewController(searchCityVC, animated: false)
     }
     
-    public func navigateToDetailWeatherCity() {
-        let swiftUIView = DetailWeatherCityScreen()
+    public func navigateToDetailWeatherCity(_ city: String) {
+        let swiftUIView = DetailWeatherCityScreen(viewModel: WeatherViewModel(city: city))
         let hostingController = UIHostingController(rootView: swiftUIView)
         navigationController.pushViewController(hostingController, animated: true)
     }

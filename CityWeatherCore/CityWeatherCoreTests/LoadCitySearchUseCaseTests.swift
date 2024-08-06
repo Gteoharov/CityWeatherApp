@@ -138,10 +138,9 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
                           country: String,
                           state: String? = nil) ->
     (model: CitySearchItem, json: [String: Any]) {
-        let city = CitySearchItem(name: name, localNames: localNames, latitude: latitude, longitude: longitude, country: country, state: state)
+        let city = CitySearchItem(name: name, latitude: latitude, longitude: longitude, country: country, state: state)
         var jsonCity: [String: Any] = [
             "name": name,
-            "local_names": localNames,
             "lat": latitude,
             "lon": longitude,
             "country": country
