@@ -11,7 +11,6 @@ final class SearchCityViewController: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     private let tableView = UITableView()
-    private let indicatorParentView = UIView()
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     private let noResultsLabel = UILabel()
     
@@ -27,51 +26,47 @@ final class SearchCityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTableView()
         bindViewModel()
-        setupSearchController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setUpUI()
-        setupIndicatorView()
-        setupNoResultsLabel()
     }
     
     private func bindViewModel() {
-        viewModel.$cityItems
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.tableView.reloadData()
-                if self.viewModel.cityItems.isEmpty && self.searchController.searchBar.text!.count > 3 {
-                    self.noResultsLabel.showWithOpacityEffect()
-                } else {
-                    self.noResultsLabel.hideWithOpacityEffect()
+        Publishers.CombineLatest3(viewModel.$cityItems, viewModel.$isLoading, viewModel.$currentQuery)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (items, isLoading, query) in
+                    guard let self = self else { return }
+                    self.tableView.reloadData()
+                    
+                    let shouldShowNoResults = !isLoading && items.isEmpty && query.count > 2
+                    self.updateBackgroundView(isEmpty: items.isEmpty, showNoResults: shouldShowNoResults)
+                    
+                    if isLoading {
+                        self.indicatorView.startAnimating()
+                        self.noResultsLabel.isHidden = true
+                    } else {
+                        self.indicatorView.stopAnimating()
+                        self.noResultsLabel.isHidden = !shouldShowNoResults
+                    }
                 }
-            }
-            .store(in: &subscriptions)
-        
-        viewModel.$isLoading
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isLoading in
-                guard let self = self else { return }
-                isLoading ? self.indicatorView.startAnimating() : self.indicatorView.stopAnimating()
-            }
-            .store(in: &subscriptions)
-        
+                .store(in: &subscriptions)
         viewModel.$error
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
-                guard self != nil else { return }
-                if let error = error {
-                    // Handle error
-                    print("Error: \(error.localizedDescription)")
-                }
+                guard let _ = self, let error = error else { return }
+                // Handle error
+                print("Error: \(error.localizedDescription)")
             }
             .store(in: &subscriptions)
+    }
+    
+    private func updateBackgroundView(isEmpty: Bool, showNoResults: Bool) {
+        tableView.backgroundView?.isHidden = !isEmpty
+        noResultsLabel.isHidden = !showNoResults
     }
 }
 
@@ -79,62 +74,13 @@ final class SearchCityViewController: UIViewController {
 private extension SearchCityViewController {
     private func setUpUI() {
         view.backgroundColor = .systemBackground
-        navigationItem.title = "Weather"
+        navigationItem.title = "City Search"
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        setupTableView()
+        setupSearchController()
+        setupBackgroundView()
     }
-    
-    private func setupIndicatorView() {
-        indicatorParentView.translatesAutoresizingMaskIntoConstraints = false
-        indicatorView.translatesAutoresizingMaskIntoConstraints = false
-        indicatorParentView.addSubview(indicatorView)
-        
-        view.addSubview(indicatorParentView)
-        
-        NSLayoutConstraint.activate([
-            indicatorParentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            indicatorParentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            indicatorParentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            indicatorParentView.heightAnchor.constraint(equalToConstant: 30),
-            
-            indicatorView.centerXAnchor.constraint(equalTo: indicatorParentView.centerXAnchor),
-            indicatorView.centerYAnchor.constraint(equalTo: indicatorParentView.centerYAnchor)
-        ])
-        
-        view.bringSubviewToFront(indicatorParentView)
-    }
-    
-    private func setupNoResultsLabel() {
-        noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
-        noResultsLabel.text = "No Cities Match Your Search"
-        noResultsLabel.isHidden = true
-        noResultsLabel.textAlignment = .center
-        noResultsLabel.textColor = .gray
-        
-        view.addSubview(noResultsLabel)
-        
-        NSLayoutConstraint.activate([
-            noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noResultsLabel.topAnchor.constraint(equalTo: indicatorParentView.bottomAnchor, constant: 20),
-            noResultsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            noResultsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-    }
-    
-    private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "Search City"
-        searchController.searchBar.searchTextField.autocorrectionType = .no
-        searchController.searchBar.delegate = self
-        searchController.searchBar.searchTextField.delegate = self
-        definesPresentationContext = true
-    }
-}
-
-// MARK: - TableView Setup and Delegate/DataSource Methods
-extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func setupTableView() {
         tableView.register(SearchCityTableViewCell.self, forCellReuseIdentifier: "SearchCityTableViewCell")
@@ -154,14 +100,57 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
         ])
     }
     
+    private func setupBackgroundView() {
+        let backgroundView = UIView()
+        
+        noResultsLabel.text = "No Cities Match Your Search"
+        noResultsLabel.textAlignment = .center
+        noResultsLabel.textColor = .gray
+        noResultsLabel.isHidden = true
+        
+        let stackView = UIStackView(arrangedSubviews: [indicatorView, noResultsLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.alignment = .center
+        
+        backgroundView.addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 75),
+            stackView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: backgroundView.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: backgroundView.trailingAnchor, constant: -20)
+        ])
+        
+        tableView.backgroundView = backgroundView
+    }
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Enter city name"
+        searchController.searchBar.searchTextField.autocorrectionType = .no
+        searchController.searchBar.delegate = self
+        searchController.searchBar.searchTextField.delegate = self
+        definesPresentationContext = true
+    }
+}
+
+// MARK: - TableView Setup and Delegate/DataSource Methods
+extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.rowsCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCityTableViewCell", for: indexPath) as! SearchCityTableViewCell
-        cell.selectionStyle = .none
-        cell.cityLabel.text = viewModel.displayName(indexPath.row)
+        
+        let city = viewModel.cityItems[indexPath.row]
+        cell.configure(with: city)
         return cell
     }
     
@@ -177,7 +166,7 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
         cell.transform = CGAffineTransform(translationX: 0, y: -cell.frame.height)
         cell.alpha = 0
         
-        UIView.animate(withDuration: 0.85, delay: 0.05 * Double(indexPath.row), options: [.curveEaseInOut], animations: {
+        UIView.animate(withDuration: 0.75, delay: 0.05 * Double(indexPath.row), options: [.curveEaseInOut], animations: {
             cell.transform = .identity
             cell.alpha = 1
         }, completion: nil)

@@ -8,6 +8,7 @@ class SearchCityViewModel {
     @Published private(set) var cityItems: [CitySearchItem] = []
     @Published private(set) var isLoading: Bool = false
     @Published private(set) var error: Error?
+    @Published private(set) var currentQuery = ""
     
     private let searchSubject = PassthroughSubject<String, Never>()
     
@@ -17,13 +18,13 @@ class SearchCityViewModel {
     }
     
     func searchCity(query: String) {
+        currentQuery = query
         searchSubject.send(query)
     }
     
     private func setupBindings() {
         searchSubject
             .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
-            .removeDuplicates()
             .sink { [weak self] query in
                 guard let self = self, query.count > 2 else {
                     self?.clearItems()
