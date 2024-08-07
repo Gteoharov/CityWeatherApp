@@ -222,3 +222,9 @@ GET data/2.5/weather?lat=lon=units=
   "cod": 200
 }
 ```
+
+---
+
+## App Architecture
+
+![](architecture.png)
