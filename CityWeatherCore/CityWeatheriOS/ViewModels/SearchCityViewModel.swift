@@ -1,12 +1,15 @@
 import Combine
 import CityWeatherCore
 
+
+
 class SearchCityViewModel {
     private let loader: CitySearchLoader
     private var subscriptions = Set<AnyCancellable>()
     
     @Published private(set) var cityItems: [CitySearchItem] = []
     @Published private(set) var isLoading: Bool = false
+    @Published private(set) var selectedTemperatureUnit: TemperatureUnit = .fahrenheit
     @Published private(set) var error: Error?
     @Published private(set) var currentQuery = ""
     @Published private(set) var lastSuccessfulQuery = ""
@@ -69,6 +72,10 @@ class SearchCityViewModel {
         lastSuccessfulQuery = ""
         currentQuery = ""
         shouldTriggerSearch = false
+    }
+    
+    func changeTemperatureUnit(to unit: TemperatureUnit) {
+        selectedTemperatureUnit = unit
     }
     
     func displayName(_ index: Int) -> String {

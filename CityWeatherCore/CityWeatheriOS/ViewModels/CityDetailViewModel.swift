@@ -6,15 +6,18 @@ class CityDetailViewModel: ObservableObject {
     private let loader: CityDetailLoader
     private let lat: Double
     private let lon: Double
+    private let unites: TemperatureUnit
     
     @Published var city: CityDetailItem?
     @Published var isLoading = false
     @Published var error: Error?
     
-    init(loader: CityDetailLoader, lat: Double, lon: Double) {
+    
+    init(loader: CityDetailLoader, lat: Double, lon: Double, unites: TemperatureUnit) {
         self.loader = loader
         self.lat = lat
         self.lon = lon
+        self.unites = unites
     }
     
     private var cancellables = Set<AnyCancellable>()
@@ -25,7 +28,7 @@ class CityDetailViewModel: ObservableObject {
         Future<CityDetailItem, Error> { [weak self] promise in
             guard let self = self else { return }
             Task {
-                let result = await self.loader.load(self.lat, lon: self.lon)
+                let result = await self.loader.load(self.lat, lon: self.lon, units: self.unites)
                 promise(result)
             }
         }
@@ -44,6 +47,7 @@ class CityDetailViewModel: ObservableObject {
             guard let self = self else { return }
             self.city = city
             self.error = nil
+            
         })
         .store(in: &cancellables)
     }
