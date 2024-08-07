@@ -7,4 +7,11 @@ public struct CityWeatherURLConfig {
         }
         return url
     }
+    
+    public static var detailCityBaseURL: URL {
+        guard let urlString = Bundle.main.infoDictionary?["CityDetailBaseURL"] as? String, let url = URL(string: urlString) else {
+            fatalError("Base URL not configured correctly")
+        }
+        return url
+    }
 }
