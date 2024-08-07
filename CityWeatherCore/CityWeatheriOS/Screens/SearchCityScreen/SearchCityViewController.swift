@@ -5,6 +5,7 @@ import CityWeatherCore
 final class SearchCityViewController: UIViewController {
     
     private let viewModel: SearchCityViewModel
+    
     private var subscriptions = Set<AnyCancellable>()
     
     weak var coordinator: MainCoordinator?
@@ -13,6 +14,7 @@ final class SearchCityViewController: UIViewController {
     private let tableView = UITableView()
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     private let noResultsLabel = UILabel()
+    private var temperatureButton = UIButton()
     
     public init(viewModel: SearchCityViewModel) {
         self.viewModel = viewModel
@@ -58,6 +60,14 @@ final class SearchCityViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
+        viewModel.$selectedTemperatureUnit
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.updateTemperatureButtonTitle()
+            }
+            .store(in: &subscriptions)
+        
         viewModel.$error
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -66,6 +76,7 @@ final class SearchCityViewController: UIViewController {
                 print("Error: \(error.localizedDescription)")
             }
             .store(in: &subscriptions)
+            
     }
     
     private func updateBackgroundView(isEmpty: Bool, showNoResults: Bool) {
@@ -84,6 +95,47 @@ private extension SearchCityViewController {
         setupTableView()
         setupSearchController()
         setupBackgroundView()
+        createNavBarButton()
+    }
+    
+    private func createNavBarButton() {
+        temperatureButton = UIButton(type: .system)
+        temperatureButton.setTitle(viewModel.selectedTemperatureUnit.rawValue, for: .normal)
+        
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+        customView.addSubview(temperatureButton)
+        
+        temperatureButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            temperatureButton.centerXAnchor.constraint(equalTo: customView.centerXAnchor),
+            temperatureButton.centerYAnchor.constraint(equalTo: customView.centerYAnchor),
+            temperatureButton.widthAnchor.constraint(equalTo: customView.widthAnchor),
+            temperatureButton.heightAnchor.constraint(equalTo: customView.heightAnchor)
+        ])
+        
+        let barButtonItem = UIBarButtonItem(customView: customView)
+        self.navigationItem.rightBarButtonItem = barButtonItem
+        
+        updateMenu()
+    }
+
+    private func updateMenu() {
+        let updatedMenu = UIMenu(title: "Select Temperature Unit", children: TemperatureUnit.allCases.map { unit in
+            let state: UIMenuElement.State = (unit == viewModel.selectedTemperatureUnit) ? .on : .off
+            return UIAction(title: unit.rawValue, state: state) { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.changeTemperatureUnit(to: unit)
+                self.updateTemperatureButtonTitle()
+                self.updateMenu()
+            }
+        })
+        
+        temperatureButton.menu = updatedMenu
+        temperatureButton.showsMenuAsPrimaryAction = true
+    }
+    
+    private func updateTemperatureButtonTitle() {
+        temperatureButton.setTitle(viewModel.selectedTemperatureUnit.rawValue, for: .normal)
     }
     
     private func setupTableView() {
@@ -106,28 +158,28 @@ private extension SearchCityViewController {
     
     private func setupBackgroundView() {
         let backgroundView = UIView()
-
+        
         noResultsLabel.text = "No Cities Match Your Search"
         noResultsLabel.textAlignment = .center
         noResultsLabel.textColor = .gray
         noResultsLabel.isHidden = true
-
+        
         backgroundView.addSubview(indicatorView)
         backgroundView.addSubview(noResultsLabel)
-
+        
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
         noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             // Constraints for indicatorView
             indicatorView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 75),
             indicatorView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-
+            
             // Constraints for noResultsLabel
             noResultsLabel.topAnchor.constraint(equalTo: indicatorView.bottomAnchor, constant: 10),
             noResultsLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor)
         ])
-
+        
         tableView.backgroundView = backgroundView
     }
     
@@ -159,7 +211,7 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.navigateToDetailWeatherCity(viewModel.cityItems[indexPath.row].latitude, lon: viewModel.cityItems[indexPath.row].longitude)
+        coordinator?.navigateToDetailWeatherCity(viewModel.cityItems[indexPath.row].latitude, lon: viewModel.cityItems[indexPath.row].longitude, unites: viewModel.selectedTemperatureUnit)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
