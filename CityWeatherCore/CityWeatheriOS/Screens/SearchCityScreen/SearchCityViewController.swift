@@ -106,28 +106,28 @@ private extension SearchCityViewController {
     
     private func setupBackgroundView() {
         let backgroundView = UIView()
-        
+
         noResultsLabel.text = "No Cities Match Your Search"
         noResultsLabel.textAlignment = .center
         noResultsLabel.textColor = .gray
         noResultsLabel.isHidden = true
-        
-        let stackView = UIStackView(arrangedSubviews: [indicatorView, noResultsLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.alignment = .center
-        
-        backgroundView.addSubview(stackView)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        backgroundView.addSubview(indicatorView)
+        backgroundView.addSubview(noResultsLabel)
+
+        indicatorView.translatesAutoresizingMaskIntoConstraints = false
+        noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 75),
-            stackView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: backgroundView.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(lessThanOrEqualTo: backgroundView.trailingAnchor, constant: -20)
+            // Constraints for indicatorView
+            indicatorView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 75),
+            indicatorView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+
+            // Constraints for noResultsLabel
+            noResultsLabel.topAnchor.constraint(equalTo: indicatorView.bottomAnchor, constant: 10),
+            noResultsLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor)
         ])
-        
+
         tableView.backgroundView = backgroundView
     }
     
