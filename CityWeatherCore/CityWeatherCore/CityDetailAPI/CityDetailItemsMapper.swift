@@ -8,7 +8,7 @@ final class CityDetailItemsMapper {
     
     static func map(_ data: Data, from response: HTTPURLResponse) throws -> RemoteCityDetailItem {
         guard response.statusCode == 200 else {
-            throw HTTPClientError.unexpectedResponse
+            throw RemoteCityDetailLoader.Error.invalidData
         }
         
         do {
@@ -16,7 +16,7 @@ final class CityDetailItemsMapper {
             return city
         } catch {
             print("Decoding error: \(error)")
-            throw HTTPClientError.unexpectedResponse
+            throw RemoteCityDetailLoader.Error.invalidData
         }
     }
 }
