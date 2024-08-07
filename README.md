@@ -168,6 +168,9 @@ GET geo/1.0/direct?q=
   }
 ]
 
+```
+
+```
 GET data/2.5/weather?lat=lon=units=
 
 200 RESPONSE
@@ -217,3 +220,4 @@ GET data/2.5/weather?lat=lon=units=
   "name": "Stara Zagora",
   "cod": 200
 }
+```
