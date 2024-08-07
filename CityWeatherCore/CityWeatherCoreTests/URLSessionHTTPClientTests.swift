@@ -68,7 +68,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
     }
     
-    func test_Query_Parameters() async throws {
+    func test_query_parameters() async throws {
         let expectation = XCTestExpectation(description: "Query parameters")
         
         StubUrlProtocol.observer = { request in

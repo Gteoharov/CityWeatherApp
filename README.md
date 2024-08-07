@@ -21,8 +21,62 @@ Use a design pattern like MVVM and Combine framework.
 Include loading indicators during API calls. 
 
 
-Instructions how to build and run the project: 
+## Instructions how to build and run the project: 
 1. Clone the repo local to your machine.
 2. Double-click the WeatherApp.xcworkspace file in Finder, or
 Use the command line to open Xcode: open WeatherApp.xcworkspace
 3. Build and run CityWeatherApp target to any iOS, iPadOS or MacOS (with m1+)
+
+### Payload contract
+
+```
+GET geo/1.0/direct?q=
+
+200 RESPONSE
+
+[
+  {
+    "name": "a Name of the City",
+    "local_names": {
+      "en": "Stara Zagora",
+      "de": "Stara Sagora",
+      "sr": "Стара Загора",
+      "feature_name": "Stara Zagora",
+      "nl": "Stara Zagora",
+      "ro": "Stara Zagora",
+      "fr": "Stara Zagora",
+      "ru": "Стара-Загора",
+      "ascii": "Stara Zagora",
+      "hr": "Stara Zagora",
+      "bg": "Стара Загора",
+      "et": "Stara Zagora",
+      "el": "Στάρα Ζαγόρα",
+      "tr": "Eski Zağra"
+    },
+    "lat": 42.4248111,
+    "lon": 25.6257479,
+    "country": "BG"
+  },
+  {
+    "name": "Stara Zagora",
+    "local_names": {
+      "nl": "Stara Zagora",
+      "hr": "Stara Zagora",
+      "ru": "Стара-Загора",
+      "bg": "Стара Загора",
+      "el": "Στάρα Ζαγόρα",
+      "de": "Stara Sagora",
+      "et": "Stara Zagora",
+      "tr": "Eski Zağra",
+      "fr": "Stara Zagora",
+      "sr": "Стара Загора",
+      "ascii": "Stara Zagora",
+      "ro": "Stara Zagora",
+      "en": "Stara Zagora",
+      "feature_name": "Stara Zagora"
+    },
+    "lat": 42.3705205,
+    "lon": 25.57158193530669,
+    "country": "BG"
+  }
+]

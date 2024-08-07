@@ -34,7 +34,6 @@ public final class RemoteCityDetailLoader: CityDetailLoader {
     }
     
     public func load(_ lat: Double, lon: Double, units: TemperatureUnit) async -> RemoteCityDetailLoader.LoadCityDetailResult {
-        
         let result = await client.perform(request: request, queryItems: buildDetailQuery(lat: lat, lon: lon, units: units))
         
         switch result {
