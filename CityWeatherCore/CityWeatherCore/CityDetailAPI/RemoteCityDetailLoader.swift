@@ -49,7 +49,7 @@ public final class RemoteCityDetailLoader: CityDetailLoader {
 
 private extension RemoteCityDetailItem {
     func toModel() -> CityDetailItem {
-        CityDetailItem(coordinates: self.cord.toModel(), weather: self.weather.toModels(), base: self.base, mainWeather: self.main.toModel(), visibility: self.visibility, windInfo: self.wind.toModel(), clouds: self.clouds.toModel(), dateTime: self.dt, systemWeather: self.sys.toModel(), timezone: self.timezone, id: self.id, name: self.name, code: self.code)
+        CityDetailItem(coordinates: self.coord.toModel(), weather: self.weather.toModels(), base: self.base, mainWeather: self.main.toModel(), visibility: self.visibility, windInfo: self.wind.toModel(), clouds: self.clouds.toModel(), dateTime: self.dt, systemWeather: self.sys.toModel(), timezone: self.timezone, id: self.id, name: self.name, cod: self.cod)
     }
 }
 
@@ -89,9 +89,3 @@ private extension Sys {
         SystemWeather(country: self.country, sunrise: self.sunrise, sunset: self.sunset)
     }
 }
-
-
-
-
-
-

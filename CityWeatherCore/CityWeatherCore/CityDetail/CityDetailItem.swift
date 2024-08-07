@@ -14,9 +14,9 @@ public struct CityDetailItem: Equatable {
     public let timezone: Int
     public let id: Int
     public let name: String
-    public let code: Int
+    public let cod: Int
     
-    public init(coordinates: Coordinates, weather: [WeatherInfo], base: String, mainWeather: MainWeather, visibility: Int, windInfo: WindInfo, clouds: CloudsWeather, dateTime: Int, systemWeather: SystemWeather, timezone: Int, id: Int, name: String, code: Int) {
+    public init(coordinates: Coordinates, weather: [WeatherInfo], base: String, mainWeather: MainWeather, visibility: Int, windInfo: WindInfo, clouds: CloudsWeather, dateTime: Int, systemWeather: SystemWeather, timezone: Int, id: Int, name: String, cod: Int) {
         self.coordinates = coordinates
         self.weather = weather
         self.base = base
@@ -29,7 +29,7 @@ public struct CityDetailItem: Equatable {
         self.timezone = timezone
         self.id = id
         self.name = name
-        self.code = code
+        self.cod = cod
     }
 }
 
@@ -82,9 +82,9 @@ public struct MainWeather: Equatable {
 public struct WindInfo: Equatable {
     public let speed: Double
     public let deg: Int
-    public let gust: Double
+    public let gust: Double?
     
-    public init(speed: Double, deg: Int, gust: Double) {
+    public init(speed: Double, deg: Int, gust: Double?) {
         self.speed = speed
         self.deg = deg
         self.gust = gust

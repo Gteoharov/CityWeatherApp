@@ -1,7 +1,7 @@
 import Foundation
 
 struct RemoteCityDetailItem: Decodable {
-    let cord: Coord
+    let coord: Coord
     let weather: [Weather]
     let base: String
     let main: Main
@@ -13,7 +13,7 @@ struct RemoteCityDetailItem: Decodable {
     let timezone: Int
     let id: Int
     let name: String
-    let code: Int
+    let cod: Int
 }
 
 struct Coord: Decodable {
@@ -46,7 +46,7 @@ struct Clouds: Decodable {
 struct Wind: Decodable {
     let speed: Double
     let deg: Int
-    let gust: Double
+    let gust: Double?
 }
 
 struct Sys: Decodable {
