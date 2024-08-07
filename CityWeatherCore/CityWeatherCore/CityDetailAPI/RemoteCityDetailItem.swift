@@ -4,7 +4,7 @@ struct RemoteCityDetailItem: Decodable {
     let cord: Coord
     let weather: [Weather]
     let base: String
-    let main: [Main]
+    let main: Main
     let visibility: Int
     let wind: Wind
     let clouds: Clouds
@@ -13,7 +13,7 @@ struct RemoteCityDetailItem: Decodable {
     let timezone: Int
     let id: Int
     let name: String
-    let cod: Int
+    let code: Int
 }
 
 struct Coord: Decodable {
