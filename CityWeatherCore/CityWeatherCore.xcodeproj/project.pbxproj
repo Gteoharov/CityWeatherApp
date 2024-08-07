@@ -11,6 +11,8 @@
 		210399192C633EE900F52E95 /* CityDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210399182C633EE900F52E95 /* CityDetailItem.swift */; };
 		2103991B2C63459F00F52E95 /* CityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2103991A2C63459F00F52E95 /* CityDetailViewModel.swift */; };
 		2103991E2C634DAD00F52E95 /* RemoteCityDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2103991D2C634DAD00F52E95 /* RemoteCityDetailItem.swift */; };
+		210399202C63525400F52E95 /* CityDetailItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2103991F2C63525400F52E95 /* CityDetailItemsMapper.swift */; };
+		210399222C6353D000F52E95 /* RemoteCityDetailLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210399212C6353D000F52E95 /* RemoteCityDetailLoader.swift */; };
 		213556B42C60DEC000008A0B /* CityWeatherCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D68D5E2C5E0A2400ED8E8A /* CityWeatherCore.framework */; platformFilter = ios; };
 		213556B52C60DEC000008A0B /* CityWeatherCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21D68D5E2C5E0A2400ED8E8A /* CityWeatherCore.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		213556BA2C61046300008A0B /* SearchCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213556B92C61046300008A0B /* SearchCityTableViewCell.swift */; };
@@ -75,6 +77,8 @@
 		210399182C633EE900F52E95 /* CityDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailItem.swift; sourceTree = "<group>"; };
 		2103991A2C63459F00F52E95 /* CityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailViewModel.swift; sourceTree = "<group>"; };
 		2103991D2C634DAD00F52E95 /* RemoteCityDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCityDetailItem.swift; sourceTree = "<group>"; };
+		2103991F2C63525400F52E95 /* CityDetailItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailItemsMapper.swift; sourceTree = "<group>"; };
+		210399212C6353D000F52E95 /* RemoteCityDetailLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCityDetailLoader.swift; sourceTree = "<group>"; };
 		213556B92C61046300008A0B /* SearchCityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCityTableViewCell.swift; sourceTree = "<group>"; };
 		213556BB2C6148BB00008A0B /* Extension+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UILabel.swift"; sourceTree = "<group>"; };
 		213556BD2C61530E00008A0B /* DetailWeatherCityScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWeatherCityScreen.swift; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 		2103991C2C634D3300F52E95 /* CityDetailAPI */ = {
 			isa = PBXGroup;
 			children = (
+				210399212C6353D000F52E95 /* RemoteCityDetailLoader.swift */,
+				2103991F2C63525400F52E95 /* CityDetailItemsMapper.swift */,
 				2103991D2C634DAD00F52E95 /* RemoteCityDetailItem.swift */,
 			);
 			path = CityDetailAPI;
@@ -491,11 +497,13 @@
 				210399172C633E6D00F52E95 /* CityDetailLoader.swift in Sources */,
 				213556C02C6160CC00008A0B /* Extension+String.swift in Sources */,
 				2165DA942C5E187100BA6B48 /* CitySearchItem.swift in Sources */,
+				210399202C63525400F52E95 /* CityDetailItemsMapper.swift in Sources */,
 				2183E9D42C5F7CB5000AEB81 /* HTTPClientError.swift in Sources */,
 				2165DA962C5E196B00BA6B48 /* CitySearchLoader.swift in Sources */,
 				2183E9D72C5F9B75000AEB81 /* RequestBuilder.swift in Sources */,
 				210399192C633EE900F52E95 /* CityDetailItem.swift in Sources */,
 				2165DA992C5E1A8F00BA6B48 /* HTTPClient.swift in Sources */,
+				210399222C6353D000F52E95 /* RemoteCityDetailLoader.swift in Sources */,
 				2165DA9D2C5E1C6F00BA6B48 /* RemoteCitySearchLoader.swift in Sources */,
 				2103991E2C634DAD00F52E95 /* RemoteCityDetailItem.swift in Sources */,
 				2165DAA22C5E237300BA6B48 /* URLSessionClient.swift in Sources */,
