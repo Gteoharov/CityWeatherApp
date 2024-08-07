@@ -1,7 +1,4 @@
-# WIP
-
 # The Meet Group (TMG) - City Weather App 
-
 
 ## City Weather App
 
@@ -24,3 +21,8 @@ Use a design pattern like MVVM and Combine framework.
 Include loading indicators during API calls. 
 
 
+Instructions how to build and run the project: 
+1. Clone the repo local to your machine.
+2. Double-click the WeatherApp.xcworkspace file in Finder, or
+Use the command line to open Xcode: open WeatherApp.xcworkspace
+3. Build and run CityWeatherApp target to any iOS, iPadOS or MacOS (with m1+)
