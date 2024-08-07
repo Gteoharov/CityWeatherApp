@@ -2,7 +2,6 @@ import Foundation
 
 public final class RemoteCityDetailLoader: CityDetailLoader {
     
-    
     private let request: URLRequest
     private let client: HTTPClient
     
@@ -20,18 +19,23 @@ public final class RemoteCityDetailLoader: CityDetailLoader {
         // query params for lat and lon of City
         static let lat = "lat"
         static let lon = "lon"
+        static let units = "units"
     }
     
-    private func buildDetailQuery(lat: Double, lon: Double) -> [URLQueryItem] {
-        [
+    private func buildDetailQuery(lat: Double, lon: Double, units: TemperatureUnit) -> [URLQueryItem] {
+        var defaultParams = [
             URLQueryItem(name: QueryParameter.lat, value: "\(lat)"),
-            URLQueryItem(name: QueryParameter.lon, value: "\(lon)"),
+            URLQueryItem(name: QueryParameter.lon, value: "\(lon)")
         ]
+        if units.rawValue == "Celsius" {
+            defaultParams.append(URLQueryItem(name: QueryParameter.units, value: "metric"))
+        }
+        return defaultParams
     }
     
-    public func load(_ lat: Double, lon: Double) async -> RemoteCityDetailLoader.LoadCityDetailResult {
+    public func load(_ lat: Double, lon: Double, units: TemperatureUnit) async -> RemoteCityDetailLoader.LoadCityDetailResult {
         
-        let result = await client.perform(request: request, queryItems: buildDetailQuery(lat: lat, lon: lon))
+        let result = await client.perform(request: request, queryItems: buildDetailQuery(lat: lat, lon: lon, units: units))
         
         switch result {
         case let .success((data, response)):

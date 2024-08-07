@@ -20,10 +20,10 @@ public class MainCoordinator: Coordinator {
         navigationController.pushViewController(searchCityVC, animated: false)
     } 
     
-    public func navigateToDetailWeatherCity(_ lat: Double, lon: Double) {
+    public func navigateToDetailWeatherCity(_ lat: Double, lon: Double, unites: TemperatureUnit) {
         let client = URLSessionClient(session: URLSession(configuration: .ephemeral))
         let loader = RemoteCityDetailLoader(request: URLRequest(url: CityWeatherURLConfig.detailCityBaseURL), client: client)
-        let swiftUIView = DetailWeatherCityScreen(viewModel: CityDetailViewModel(loader: loader, lat: lat, lon: lon))
+        let swiftUIView = DetailWeatherCityScreen(viewModel: CityDetailViewModel(loader: loader, lat: lat, lon: lon, unites: unites))
         let hostingController = UIHostingController(rootView: swiftUIView)
         navigationController.pushViewController(hostingController, animated: true)
     }
