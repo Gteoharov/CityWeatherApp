@@ -1,6 +1,5 @@
 import SwiftUI
 import Combine
-import CityWeatherCore
 
 struct DetailWeatherCityScreen: View {
     @ObservedObject var viewModel: CityDetailViewModel
@@ -11,9 +10,30 @@ struct DetailWeatherCityScreen: View {
                 if viewModel.isLoading {
                     ProgressView()
                 } else if let weatherResponse = viewModel.city {
-                    WeatherInfoView(weatherResponse: weatherResponse)
-                        .transition(.opacity)
-                        .animation(.easeInOut(duration: 1), value: 10)
+                    VStack {
+                        Text(String(format: "%.1f°", weatherResponse.mainWeather.temp))
+                            .font(.largeTitle)
+                            .bold()
+                        Text(weatherResponse.weather.first?.description ?? "")
+                            .font(.title2)
+                            .foregroundColor(.gray)
+                        if let icon = weatherResponse.weather.first?.icon {
+                            let iconURL = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")!
+                            AsyncImage(url: iconURL) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 100)
+                            } placeholder: {
+                                ProgressView()
+                            }
+                        }
+                        Text(weatherResponse.name)
+                            .font(.title)
+                    }
+                    .padding(.top)
+                    .transition(.opacity)
+                    .animation(.easeInOut(duration: 1), value: 10)
                 } else {
                     Text("No weather data available")
                         .foregroundColor(.gray)
@@ -22,38 +42,9 @@ struct DetailWeatherCityScreen: View {
             .task {
                 viewModel.fetchCityDetail()
             }
-            
         }
         .refreshable {
             viewModel.fetchCityDetail()
-        }
-    }
-}
-
-struct WeatherInfoView: View {
-    let weatherResponse: CityDetailItem
-    
-    var body: some View {
-        VStack {
-            Text(String(format: "%.1f°", weatherResponse.mainWeather.temp))
-                .font(.largeTitle)
-                .bold()
-            Text(weatherResponse.weather.first?.description ?? "")
-                .font(.title2)
-                .foregroundColor(.gray)
-            if let icon = weatherResponse.weather.first?.icon {
-                let iconURL = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")!
-                AsyncImage(url: iconURL) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
-                } placeholder: {
-                    ProgressView()
-                }
-            }
-            Text(weatherResponse.name)
-                .font(.title)
         }
     }
 }
