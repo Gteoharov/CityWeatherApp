@@ -17,17 +17,16 @@ struct DetailWeatherCityScreen: View {
                         Text(weatherResponse.weather.first?.description ?? "")
                             .font(.title2)
                             .foregroundColor(.gray)
-                        if let icon = weatherResponse.weather.first?.icon {
-                            let iconURL = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")!
-                            AsyncImage(url: iconURL) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100, height: 100)
-                            } placeholder: {
-                                ProgressView()
-                            }
+                        
+                        AsyncImage(url: weatherResponse.weatherIcon) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100, height: 100)
+                        } placeholder: {
+                            ProgressView()
                         }
+                        
                         Text(weatherResponse.name)
                             .font(.title)
                     }

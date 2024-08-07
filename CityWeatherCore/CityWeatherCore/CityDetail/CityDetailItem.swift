@@ -15,6 +15,9 @@ public struct CityDetailItem: Equatable {
     public let id: Int
     public let name: String
     public let cod: Int
+    public var weatherIcon: URL {
+        WeatherImageURLBuilder.weatherIconURL(iconCode: weather[0].icon)
+    }
     
     public init(coordinates: Coordinates, weather: [WeatherInfo], base: String, mainWeather: MainWeather, visibility: Int, windInfo: WindInfo, clouds: CloudsWeather, dateTime: Int, systemWeather: SystemWeather, timezone: Int, id: Int, name: String, cod: Int) {
         self.coordinates = coordinates
