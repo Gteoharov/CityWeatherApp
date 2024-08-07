@@ -132,19 +132,23 @@ final class LoadCitySearchUseCaseTests: XCTestCase {
     }
     
     private func makeCity(name: String,
-                          localNames: [String: String],
+                          localNames: [String: String]? = nil,
                           latitude: Double,
                           longitude: Double,
                           country: String,
                           state: String? = nil) ->
     (model: CitySearchItem, json: [String: Any]) {
-        let city = CitySearchItem(name: name, latitude: latitude, longitude: longitude, country: country, state: state)
+        let city = CitySearchItem(name: name, localNames: localNames, latitude: latitude, longitude: longitude, country: country, state: state)
         var jsonCity: [String: Any] = [
             "name": name,
             "lat": latitude,
             "lon": longitude,
             "country": country
         ]
+        
+        if let localNames = localNames {
+            jsonCity["local_names"] = localNames
+        }
         
         if let state = state {
             jsonCity["state"] = state
