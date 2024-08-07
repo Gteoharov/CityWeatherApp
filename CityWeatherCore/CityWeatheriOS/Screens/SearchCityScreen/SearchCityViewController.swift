@@ -188,6 +188,7 @@ extension SearchCityViewController: UISearchResultsUpdating {
 extension SearchCityViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.clearItems()
+        tableView.reloadData()
     }
 }
 
@@ -202,6 +203,7 @@ extension SearchCityViewController: UITextFieldDelegate {
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         viewModel.clearItems()
+        tableView.reloadData()
         return true
     }
 }
