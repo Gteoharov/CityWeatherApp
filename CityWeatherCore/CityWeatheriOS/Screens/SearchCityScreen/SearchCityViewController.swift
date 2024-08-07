@@ -159,7 +159,7 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.navigateToDetailWeatherCity(viewModel.cityItems[indexPath.row].name)
+        coordinator?.navigateToDetailWeatherCity(viewModel.cityItems[indexPath.row].latitude, lon: viewModel.cityItems[indexPath.row].longitude)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
