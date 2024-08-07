@@ -10,24 +10,8 @@ public class MainCoordinator: Coordinator {
     }
     
     public func configureRootScreen() {
-        let parameters = [
-            "limit": "5",
-            "appid": "86879ac16cba5e431ae293fa564b6bf3"
-        ]
-
-        // Create URLComponents from the base URL
-        var urlComponents = URLComponents(string: "http://api.openweathermap.org/geo/1.0/direct")
-
-        // Add query parameters to URLComponents
-        urlComponents?.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
-
-        guard let finalURL = urlComponents?.url else {
-            return
-        }
-        
         let client = URLSessionClient(session: URLSession(configuration: .ephemeral))
-        let request = URLRequest(url: finalURL)
-            
+        let request = URLRequest(url: CityWeatherURLConfig.searchBaseURL)
         let loader = RemoteCitySearchLoader(request: request, client: client)
         let viewModel = SearchCityViewModel(loader: loader)
         let searchCityVC = SearchCityViewController(viewModel: viewModel)
