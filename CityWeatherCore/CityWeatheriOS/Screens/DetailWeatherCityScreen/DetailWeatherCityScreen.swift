@@ -27,15 +27,6 @@ struct DetailWeatherCityScreen: View {
         .refreshable {
             viewModel.fetchCityDetail()
         }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    // Button action
-                }) {
-                    Image(systemName: "thermometer.high")
-                }
-            }
-        }
     }
 }
 
@@ -44,7 +35,7 @@ struct WeatherInfoView: View {
     
     var body: some View {
         VStack {
-            Text("\(Int(weatherResponse.mainWeather.temp))°")
+            Text(String(format: "%.1f°", weatherResponse.mainWeather.temp))
                 .font(.largeTitle)
                 .bold()
             Text(weatherResponse.weather.first?.description ?? "")
