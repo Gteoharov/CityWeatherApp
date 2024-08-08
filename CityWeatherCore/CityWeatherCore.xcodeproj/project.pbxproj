@@ -41,6 +41,8 @@
 		2183E9D22C5E635A000AEB81 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2183E9D12C5E635A000AEB81 /* URLSessionHTTPClientTests.swift */; };
 		2183E9D42C5F7CB5000AEB81 /* HTTPClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2183E9D32C5F7CB5000AEB81 /* HTTPClientError.swift */; };
 		2183E9D72C5F9B75000AEB81 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2183E9D62C5F9B75000AEB81 /* RequestBuilder.swift */; };
+		218CB7672C64D2190053FF20 /* ErrorAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CB7662C64D2190053FF20 /* ErrorAlertModifier.swift */; };
+		218CB7692C64D2720053FF20 /* WeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CB7682C64D2720053FF20 /* WeatherDetailView.swift */; };
 		21B08E812C60C446000A1055 /* CityWeatheriOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 21B08E802C60C446000A1055 /* CityWeatheriOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		21B08E8C2C60C5A4000A1055 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B08E8B2C60C5A4000A1055 /* Coordinator.swift */; };
 		21B08E8E2C60C648000A1055 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B08E8D2C60C648000A1055 /* MainCoordinator.swift */; };
@@ -122,6 +124,8 @@
 		2183E9D12C5E635A000AEB81 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		2183E9D32C5F7CB5000AEB81 /* HTTPClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientError.swift; sourceTree = "<group>"; };
 		2183E9D62C5F9B75000AEB81 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
+		218CB7662C64D2190053FF20 /* ErrorAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertModifier.swift; sourceTree = "<group>"; };
+		218CB7682C64D2720053FF20 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
 		21B08E7E2C60C446000A1055 /* CityWeatheriOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CityWeatheriOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B08E802C60C446000A1055 /* CityWeatheriOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityWeatheriOS.h; sourceTree = "<group>"; };
 		21B08E8B2C60C5A4000A1055 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -267,6 +271,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		218CB7652C64D2060053FF20 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				218CB7662C64D2190053FF20 /* ErrorAlertModifier.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		21B08E7F2C60C446000A1055 /* CityWeatheriOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,7 +320,9 @@
 		21B08E892C60C4DC000A1055 /* DetailWeatherCityScreen */ = {
 			isa = PBXGroup;
 			children = (
+				218CB7652C64D2060053FF20 /* Helpers */,
 				213556BD2C61530E00008A0B /* DetailWeatherCityScreen.swift */,
+				218CB7682C64D2720053FF20 /* WeatherDetailView.swift */,
 			);
 			path = DetailWeatherCityScreen;
 			sourceTree = "<group>";
@@ -565,7 +579,9 @@
 				213556BA2C61046300008A0B /* SearchCityTableViewCell.swift in Sources */,
 				21B08E8C2C60C5A4000A1055 /* Coordinator.swift in Sources */,
 				2103991B2C63459F00F52E95 /* CityDetailViewModel.swift in Sources */,
+				218CB7672C64D2190053FF20 /* ErrorAlertModifier.swift in Sources */,
 				213556BE2C61530E00008A0B /* DetailWeatherCityScreen.swift in Sources */,
+				218CB7692C64D2720053FF20 /* WeatherDetailView.swift in Sources */,
 				21B08E8E2C60C648000A1055 /* MainCoordinator.swift in Sources */,
 				21B08E952C60DAC6000A1055 /* SearchCityViewModel.swift in Sources */,
 			);

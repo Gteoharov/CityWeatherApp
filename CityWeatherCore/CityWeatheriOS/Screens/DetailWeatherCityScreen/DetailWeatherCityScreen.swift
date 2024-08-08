@@ -6,45 +6,27 @@ struct DetailWeatherCityScreen: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else if let weatherResponse = viewModel.city {
-                    VStack {
-                        Text(String(format: "%.1f°", weatherResponse.mainWeather.temp))
-                            .font(.largeTitle)
-                            .bold()
-                        Text(weatherResponse.weather.first?.description ?? "")
-                            .font(.title2)
-                            .foregroundColor(.gray)
-                        
-                        AsyncImage(url: weatherResponse.weatherIcon) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        
-                        Text(weatherResponse.name)
-                            .font(.title)
-                    }
-                    .padding(.top)
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 1), value: 10)
-                } else {
-                    Text("No weather data available")
-                        .foregroundColor(.gray)
-                }
-            }
-            .task {
-                viewModel.fetchCityDetail()
-            }
+            content
+                .animation(.easeInOut(duration: 0.5), value: viewModel.city)
+        }
+        .task {
+            viewModel.fetchCityDetail()
         }
         .refreshable {
             viewModel.fetchCityDetail()
         }
+        .errorAlert(for: $viewModel.error)
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.isLoading {
+            ProgressView()
+        } else if let cityDetail = viewModel.city {
+            WeatherDetailView(cityDetail: cityDetail)
+        } else {
+            Text("No weather data available")
+                .foregroundColor(.gray)
+        }
     }
 }
-
