@@ -2,13 +2,14 @@ import Combine
 import CityWeatherCore
 
 class CityDetailViewModel: ObservableObject {
+    
     private let loader: CityDetailLoader
     private let lat: Double
     private let lon: Double
     private let unites: TemperatureUnit
     
-    @Published var city: CityDetailItem?
-    @Published var isLoading = false
+    @Published private(set) var city: CityDetailItem?
+    @Published private(set) var isLoading = false
     @Published var error: Error?
     
     
