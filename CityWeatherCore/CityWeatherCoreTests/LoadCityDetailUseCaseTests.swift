@@ -79,6 +79,26 @@ final class LoadCityDetailUseCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversCityOn200HTTPResponseWithJSONItem() async {
+        let(sut, client) = makeSUT()
+        
+        let city = makeCityDetailItem(coordinates: Coordinates(latitude: 37.7749, longitude: -122.4194), name: "San Francisco")
+        
+        let itemsJSONData = makeCityJSON(city.json)
+        
+        client.stub(result: (statusCode: create200StatusCode(), data: itemsJSONData), error: nil)
+        
+        let result = await sut.load(37.7749, lon: -122.4194, units: .fahrenheit)
+        
+        switch result {
+        case let .success(receivedItems):
+            XCTAssertEqual(receivedItems, city.model)
+            
+        default:
+            XCTFail("Expect success, got \(result) instead")
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(request: URLRequest = .init(url: anyURL()),
