@@ -1,8 +1,8 @@
 import UIKit
 import CityWeatherCore
 
-final class SearchCityTableViewCell: UITableViewCell {
-    let cityLabel = UILabel()
+public final class SearchCityTableViewCell: UITableViewCell {
+    public let cityLabel = UILabel()
     let countryLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

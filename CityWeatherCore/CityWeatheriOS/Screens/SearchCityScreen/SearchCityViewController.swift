@@ -2,7 +2,7 @@ import UIKit
 import Combine
 import CityWeatherCore
 
-final class SearchCityViewController: UIViewController {
+public final class SearchCityViewController: UIViewController {
     
     private let viewModel: SearchCityViewModel
     
@@ -11,7 +11,7 @@ final class SearchCityViewController: UIViewController {
     weak var coordinator: MainCoordinator?
     
     private let searchController = UISearchController(searchResultsController: nil)
-    private let tableView = UITableView()
+    public let tableView = UITableView()
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     private let noResultsLabel = UILabel()
     private var temperatureButton = UIButton()
@@ -25,13 +25,13 @@ final class SearchCityViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         bindViewModel()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setUpUI()
@@ -198,11 +198,11 @@ private extension SearchCityViewController {
 // MARK: - TableView Setup and Delegate/DataSource Methods
 extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.rowsCount()
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCityTableViewCell", for: indexPath) as! SearchCityTableViewCell
         
         let city = viewModel.cityItems[indexPath.row]
@@ -210,15 +210,15 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         coordinator?.navigateToDetailWeatherCity(viewModel.cityItems[indexPath.row].latitude, lon: viewModel.cityItems[indexPath.row].longitude, unites: viewModel.selectedTemperatureUnit)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         60
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.transform = CGAffineTransform(translationX: 0, y: -cell.frame.height)
         cell.alpha = 0
         
@@ -231,14 +231,14 @@ extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - SearchBar Delegates
 extension SearchCityViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
+    public func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
         viewModel.searchCity(query: query)
     }
 }
 
 extension SearchCityViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.clearItems()
         tableView.reloadData()
     }
@@ -246,14 +246,14 @@ extension SearchCityViewController: UISearchBarDelegate {
 
 // MARK: - TextField Delegates
 extension SearchCityViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.isEmpty && range.length > 0 {
             viewModel.clearItems()
         }
         return true
     }
     
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+    public func textFieldShouldClear(_ textField: UITextField) -> Bool {
         viewModel.clearItems()
         tableView.reloadData()
         return true
