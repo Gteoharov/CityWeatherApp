@@ -1,8 +1,6 @@
 import Combine
 import CityWeatherCore
 
-
-
 class SearchCityViewModel {
     private let loader: CitySearchLoader
     private var subscriptions = Set<AnyCancellable>()
