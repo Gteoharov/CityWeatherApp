@@ -76,10 +76,6 @@ public final class SearchCityViewModel {
         selectedTemperatureUnit = unit
     }
     
-    func displayName(_ index: Int) -> String {
-        cityItems[index].name
-    }
-    
     func rowsCount() -> Int {
         cityItems.count
     }
