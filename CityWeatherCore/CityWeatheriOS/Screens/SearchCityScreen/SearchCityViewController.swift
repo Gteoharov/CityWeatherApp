@@ -259,3 +259,17 @@ extension SearchCityViewController: UITextFieldDelegate {
         return true
     }
 }
+
+extension SearchCityViewController {
+    public func getSearchController() -> UISearchController {
+        searchController
+    }
+    
+    public func getTemperatureButton() -> UIButton {
+        return temperatureButton
+    }
+    
+    public func getTableView() -> UITableView {
+        return tableView
+    }
+}
