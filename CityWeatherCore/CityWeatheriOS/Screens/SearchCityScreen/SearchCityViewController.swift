@@ -71,9 +71,8 @@ public final class SearchCityViewController: UIViewController {
         viewModel.$error
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
-                guard let _ = self, let error = error else { return }
-                // Handle error
-                print("Error: \(error.localizedDescription)")
+                guard let self = self, let error = error else { return }
+                handleError(error)
             }
             .store(in: &subscriptions)
         
@@ -82,6 +81,17 @@ public final class SearchCityViewController: UIViewController {
     private func updateBackgroundView(isEmpty: Bool, showNoResults: Bool) {
         tableView.backgroundView?.isHidden = !isEmpty
         noResultsLabel.isHidden = !showNoResults
+    }
+    
+    private func handleError(_ error: Error) {
+        let alert: UIAlertController
+        if let networkError = error as? RemoteCitySearchLoader.Error, networkError == .noConnection {
+            alert = UIAlertController(title: "Internet Connection", message: "Please check your internet connection and try again", preferredStyle: .alert)
+        } else {
+            alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        }
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -138,24 +148,6 @@ private extension SearchCityViewController {
         temperatureButton.setTitle(viewModel.selectedTemperatureUnit.rawValue, for: .normal)
     }
     
-    private func setupTableView() {
-        tableView.register(SearchCityTableViewCell.self, forCellReuseIdentifier: "SearchCityTableViewCell")
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.alwaysBounceVertical = false
-        
-        view.addSubview(tableView)
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-    }
-    
     private func setupBackgroundView() {
         let backgroundView = UIView()
         
@@ -197,6 +189,24 @@ private extension SearchCityViewController {
 
 // MARK: - TableView Setup and Delegate/DataSource Methods
 extension SearchCityViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    private func setupTableView() {
+        tableView.register(SearchCityTableViewCell.self, forCellReuseIdentifier: "SearchCityTableViewCell")
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.alwaysBounceVertical = false
+        
+        view.addSubview(tableView)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.rowsCount()
@@ -260,6 +270,7 @@ extension SearchCityViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: For Testing iOS target
 extension SearchCityViewController {
     public func getSearchController() -> UISearchController {
         searchController
