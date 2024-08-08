@@ -15,7 +15,7 @@ public final class SearchCityViewModel {
     
     private let searchSubject = PassthroughSubject<String, Never>()
     
-    init(loader: CitySearchLoader) {
+    public init(loader: CitySearchLoader) {
         self.loader = loader
         setupBindings()
     }
