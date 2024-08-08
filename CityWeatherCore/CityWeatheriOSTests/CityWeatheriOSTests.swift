@@ -4,10 +4,52 @@ import CityWeatherCore
 
 final class CityWeatheriOSTests: XCTestCase {
     
+    func test_init_doesNotLoadCities() {
+        let (_, loader) = makeSUT()
+        
+        XCTAssertEqual(loader.loadCallCount, 0)
+    }
     
+    func test_viewController_hasTableView() {
+        let (sut, _) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        sut.viewWillAppear(false) // This will call setUpUI()
+        
+        XCTAssertNotNil(sut.getTableView(), "The tableView should be not nil.")
+    }
     
+    func test_viewController_hasSearchController() {
+        let (sut, _) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        sut.viewWillAppear(false)
+
+        XCTAssertNotNil(sut.navigationItem.searchController, "The searchController should be set in the navigation item.")
+        XCTAssertEqual(sut.navigationItem.searchController, sut.getSearchController(), "The searchController should be the one set up in the view controller.")
+    }
+    
+    func test_viewController_hasNavigationBarButton() {
+        let (sut, _) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        sut.viewWillAppear(false)
+
+        let rightBarButtonItem = sut.navigationItem.rightBarButtonItem
+        XCTAssertNotNil(rightBarButtonItem, "The navigation bar button should be set.")
+        XCTAssertTrue(rightBarButtonItem?.customView is UIView, "The right bar button item should have a custom view.")
+        XCTAssertEqual(rightBarButtonItem?.customView?.subviews.first as? UIButton, sut.getTemperatureButton(), "The custom view should contain the temperature button.")
+    }
     
     // MARK: - Helpers
+    
+    private func makeSUT() -> (SearchCityViewController, CitiesSearchLoaderSpy) {
+        let loader = CitiesSearchLoaderSpy()
+        let viewModel = SearchCityViewModel(loader: loader)
+        let sut =  SearchCityViewController(viewModel: viewModel)
+        
+        return (sut, loader)
+    }
     
     private class CitiesSearchLoaderSpy: CitySearchLoader {
         private(set) var loadCallCount: Int = 0
@@ -37,9 +79,9 @@ final class CityWeatheriOSTests: XCTestCase {
             return result
         }
         
-        func complete(with sports: [CitySearchItem] = [], completion: @escaping (() -> Void)) {
+        func complete(with cities: [CitySearchItem] = [], completion: @escaping (() -> Void)) {
             loadCompletion = completion
-            responseContinuation.yield(.success(sports))
+            responseContinuation.yield(.success(cities))
         }
         
         func complete(with error: Error, completion: @escaping (() -> Void)) {
@@ -48,24 +90,3 @@ final class CityWeatheriOSTests: XCTestCase {
         }
     }
 }
-
-
-private extension SearchCityViewController {
-    func numberOfRenderedCities() -> Int {
-        tableView.numberOfRows(inSection: 0)
-    }
-    
-    func cell(for row: Int) -> UITableViewCell? {
-        let dataSource = tableView.dataSource
-        let indexPath = IndexPath(row: row, section: 0)
-        
-        return dataSource?.tableView(tableView, cellForRowAt: indexPath)
-    }
-}
-
-private extension SearchCityTableViewCell {
-    var name: String? {
-        cityLabel.text
-    }
-}
-

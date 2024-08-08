@@ -11,10 +11,10 @@ public final class SearchCityViewController: UIViewController {
     weak var coordinator: MainCoordinator?
     
     private let searchController = UISearchController(searchResultsController: nil)
-    public let tableView = UITableView()
+    private let tableView = UITableView()
+    private var temperatureButton = UIButton()
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     private let noResultsLabel = UILabel()
-    private var temperatureButton = UIButton()
     
     public init(viewModel: SearchCityViewModel) {
         self.viewModel = viewModel
@@ -76,7 +76,7 @@ public final class SearchCityViewController: UIViewController {
                 print("Error: \(error.localizedDescription)")
             }
             .store(in: &subscriptions)
-            
+        
     }
     
     private func updateBackgroundView(isEmpty: Bool, showNoResults: Bool) {
@@ -118,7 +118,7 @@ private extension SearchCityViewController {
         
         updateMenu()
     }
-
+    
     private func updateMenu() {
         let updatedMenu = UIMenu(title: "Select Temperature Unit", children: TemperatureUnit.allCases.map { unit in
             let state: UIMenuElement.State = (unit == viewModel.selectedTemperatureUnit) ? .on : .off
