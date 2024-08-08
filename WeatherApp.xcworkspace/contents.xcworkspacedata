@@ -10,4 +10,7 @@
    <FileRef
       location = "group:CityWeatherCore/CI.xctestplan">
    </FileRef>
+   <FileRef
+      location = "group:CityWeatherCore/CityWeatheriOS.xctestplan">
+   </FileRef>
 </Workspace>

@@ -1,5 +1,4 @@
 import Combine
-import SwiftUI
 import CityWeatherCore
 
 class CityDetailViewModel: ObservableObject {
