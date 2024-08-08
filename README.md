@@ -222,6 +222,10 @@ GET data/2.5/weather?lat=lon=units=
   "cod": 200
 }
 ```
+---
+## CI with Github Action for Pull Requests
+
+![](github-action.png)
 
 ---
 
