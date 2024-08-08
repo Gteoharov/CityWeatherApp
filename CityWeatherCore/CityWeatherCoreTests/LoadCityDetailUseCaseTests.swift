@@ -18,6 +18,15 @@ final class LoadCityDetailUseCaseTests: XCTestCase {
         XCTAssertEqual(client.sentRequest, [createURLRequest()])
     }
     
+    func test_loadTwice_requestDataFromURL() async {
+        let (sut, client) = makeSUT(request: createURLRequest())
+        
+        let _ = await sut.load(2.33, lon: 22.22, units: .fahrenheit)
+        let _ = await sut.load(2.33, lon: 22.22, units: .fahrenheit)
+        
+        XCTAssertEqual(client.sentRequest, [createURLRequest(), createURLRequest()])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(request: URLRequest = .init(url: anyURL()),
