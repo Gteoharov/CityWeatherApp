@@ -1,8 +1,19 @@
-//
-//  LoadCityDetailUseCaseTests.swift
-//  CityWeatherCoreTests
-//
-//  Created by Georgi Teoharov on 8.08.24.
-//
+import XCTest
+import CityWeatherCore
 
-import Foundation
+final class LoadCityDetailUseCaseTests: XCTestCase {
+    
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(request: URLRequest = .init(url: anyURL()),
+                         file: StaticString = #filePath,
+                         line: UInt = #line
+    ) -> (sut: RemoteCityDetailLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteCityDetailLoader(request: request, client: client)
+        trackForMemoryLeaks(client, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return (sut: sut, client: client)
+    }
+}
