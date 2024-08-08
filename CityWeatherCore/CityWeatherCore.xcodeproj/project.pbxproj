@@ -93,6 +93,7 @@
 		2157CA052C649B8300E1A66B /* LoadCityDetailUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCityDetailUseCaseTests.swift; sourceTree = "<group>"; };
 		2157CA072C649BF400E1A66B /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
 		2157CA092C64A77700E1A66B /* LoadCitySearchEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCitySearchEndToEndTests.swift; sourceTree = "<group>"; };
+		2157CA0B2C64AA6800E1A66B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2165DA932C5E187100BA6B48 /* CitySearchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchItem.swift; sourceTree = "<group>"; };
 		2165DA952C5E196B00BA6B48 /* CitySearchLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchLoader.swift; sourceTree = "<group>"; };
 		2165DA982C5E1A8F00BA6B48 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 		2165DAA82C5E329500BA6B48 /* CityWeatherCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				2157CA0B2C64AA6800E1A66B /* Info.plist */,
 				2183E9CC2C5E38CA000AEB81 /* Helpers */,
 				2165DAB12C5E34E900BA6B48 /* LoadCitySearchUseCaseTests.swift */,
 				2157CA052C649B8300E1A66B /* LoadCityDetailUseCaseTests.swift */,
@@ -548,6 +550,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7ZH7VGKXU6;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CityWeatherCoreTests/Info.plist;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = georgi.teoharov.dev.tmg.cityweather.app.ios.CityWeatherCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -563,6 +566,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7ZH7VGKXU6;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CityWeatherCoreTests/Info.plist;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = georgi.teoharov.dev.tmg.cityweather.app.ios.CityWeatherCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
