@@ -4,6 +4,12 @@ import CityWeatherCore
 final class LoadCityDetailUseCaseTests: XCTestCase {
     
     
+    func test_init_doesNotLoadDataFromURL() {
+        let (_, client) = makeSUT()
+        
+        XCTAssertEqual(client.sentRequest, [])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(request: URLRequest = .init(url: anyURL()),
