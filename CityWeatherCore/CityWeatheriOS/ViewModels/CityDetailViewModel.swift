@@ -19,7 +19,7 @@ class CityDetailViewModel: ObservableObject {
         self.unites = unites
     }
     
-    private var cancellables = Set<AnyCancellable>()
+    private var subscriptions = Set<AnyCancellable>()
     
     func fetchCityDetail() {
         isLoading = true
@@ -48,6 +48,6 @@ class CityDetailViewModel: ObservableObject {
             self.error = nil
             
         })
-        .store(in: &cancellables)
+        .store(in: &subscriptions)
     }
 }
