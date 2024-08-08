@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CityDetailBaseURL</key>
+	<string>https://api.openweathermap.org/data/2.5/weather?appid=86879ac16cba5e431ae293fa564b6bf3</string>
 	<key>SearchBaseURL</key>
 	<string>http://api.openweathermap.org/geo/1.0/direct?appid=86879ac16cba5e431ae293fa564b6bf3&amp;limit=5</string>
 </dict>

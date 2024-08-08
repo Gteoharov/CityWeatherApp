@@ -23,7 +23,7 @@ final class LoadCitySearchEndToEndTests: XCTestCase {
             CitySearchItem(name: "Parada", localNames: nil, latitude: 43.076012500000004, longitude: -8.450996357074423, country: "ES", state: "Galicia")
         ]
         
-        var urlRequest = URLRequest(url: testServerURL)
+        let urlRequest = URLRequest(url: testServerURL)
         let client = URLSessionClient(session: URLSession(configuration: .ephemeral))
         let loader = RemoteCitySearchLoader(request: urlRequest, client: client)
         
@@ -31,10 +31,10 @@ final class LoadCitySearchEndToEndTests: XCTestCase {
         
         switch receivedResult {
         case let .success(receivedCities):
-            XCTAssertFalse(receivedCities.isEmpty, "Expected sports to not be empty in the test catalogue.")
+            XCTAssertFalse(receivedCities.isEmpty, "Expected city to not be empty.")
             XCTAssertEqual(receivedCities, expectedCities)
         case let .failure(error):
-            XCTFail("Expected successful sports result, got \(error) instead.")
+            XCTFail("Expected successful city result, got \(error) instead.")
         }
     }
 }
