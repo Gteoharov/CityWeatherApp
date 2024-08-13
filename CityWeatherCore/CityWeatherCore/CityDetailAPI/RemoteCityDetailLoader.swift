@@ -27,9 +27,16 @@ public final class RemoteCityDetailLoader: CityDetailLoader {
             URLQueryItem(name: QueryParameter.lat, value: "\(lat)"),
             URLQueryItem(name: QueryParameter.lon, value: "\(lon)")
         ]
-        if units.rawValue == "Celsius" {
+        
+        switch units.rawValue {
+        case "Celsius":
             defaultParams.append(URLQueryItem(name: QueryParameter.units, value: "metric"))
+        case "Fahrenheit":
+            defaultParams.append(URLQueryItem(name: QueryParameter.units, value: "imperial"))
+        default:
+            defaultParams.append(URLQueryItem(name: QueryParameter.units, value: "standart"))
         }
+
         return defaultParams
     }
     

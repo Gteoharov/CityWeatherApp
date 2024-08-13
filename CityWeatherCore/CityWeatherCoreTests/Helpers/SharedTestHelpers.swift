@@ -46,7 +46,17 @@ func anyHTTPURLResponse() -> HTTPURLResponse {
 }
 
 func buildURL(with query: String, url: URL) -> URL {
-    url.appending(queryItems: [URLQueryItem(name: "q", value: query)])
+    
+    var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+    
+    let queryItem = URLQueryItem(name: "q", value: query)
+    
+    var existingQueryItems = urlComponents?.queryItems ?? []
+    existingQueryItems.append(queryItem)
+    
+    urlComponents?.queryItems = existingQueryItems
+    
+    return urlComponents?.url ?? url
 }
 
 func makeCityJSON(_ city: [String: Any]) -> Data {
